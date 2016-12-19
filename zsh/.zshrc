@@ -82,15 +82,10 @@ export EDITOR="vim"
 
 source $ZSH/oh-my-zsh.sh
 
-# Customize to your needs...
-export GOPATH=~/go
-export PATH=$HOME/bin:$HOME/bin/logins:$HOME/.local/bin:$HOME/utils:/usr/local/sbin:/usr/local/bin:/usr/local/opt/coreutils/libexec/gnubin:$GOPATH/bin:$PATH
-export PYTHONPATH="$PYTHONPATH:."
-
 #export TERM=xterm-256color
 
 # 定义颜色 {{{
-if [[ ("$TERM" = *256color || "$TERM" = screen*) && -f $HOME/.lscolor256 ]]; then
+if [[ ("$TERM" = *256color || "$TERM" = screen*) && -f $HOME/.dir_colors ]]; then
     #use prefefined colors
     eval $(dircolors -b $HOME/.dir_colors)
     use_256color=1
@@ -114,8 +109,19 @@ then
     # Enhance completion for iTerm2
     compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
     alias run='open -a'
+
     # autojump settings
     [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+    # homebrew settings
+    # Set architecture flags
+    export ARCHFLAGS="-arch x86_64"
+
+    # use ls from GNU Coreutils ( if exists ) instead of BSD ls.
+    GLS=$(which -s gls)
+    if [ $? -eq 0 ]; then
+        alias ls='ls --color=auto'
+    fi
 
 fi
 
@@ -165,10 +171,6 @@ check-cmd-backward-delete-char() { zle .backward-delete-char && recolor-cmd }
 zle -N self-insert check-cmd-self-insert
 zle -N backward-delete-char check-cmd-backward-delete-char
 # }}}
-
-# homebrew settings
-# Set architecture flags
-export ARCHFLAGS="-arch x86_64"
 
 # support colors in less
 export LESS_TERMCAP_mb=$'\E[01;31m'

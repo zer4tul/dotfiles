@@ -134,15 +134,15 @@ case $POWERLEVEL9K_MODE in
     icons=(
 #      LEFT_SEGMENT_SEPARATOR         $'\U2BC8'              # ⯈
 #      RIGHT_SEGMENT_SEPARATOR        $'\U2BC7'              # ⯇
-      LEFT_SEGMENT_SEPARATOR         $'\U2771'              # ❱
-      RIGHT_SEGMENT_SEPARATOR        $'\U2770'              # ❰
+      LEFT_SEGMENT_SEPARATOR         $'\U276F'              # ❯
+      RIGHT_SEGMENT_SEPARATOR        $'\U276E'              # ❮
 #      LEFT_SEGMENT_SEPARATOR         $'\U2591'              # ░
 #      RIGHT_SEGMENT_SEPARATOR        $'\U2591'              # ░
 #      LEFT_SEGMENT_SEPARATOR         $'\U2592'              # ▒
 #      RIGHT_SEGMENT_SEPARATOR        $'\U2592'              # ▒
       LEFT_SEGMENT_END_SEPARATOR     ' '                    # Whitespace
-      LEFT_SUBSEGMENT_SEPARATOR      $'\U276F'              # ❯
-      RIGHT_SUBSEGMENT_SEPARATOR     $'\U276E'              # ❮
+      LEFT_SUBSEGMENT_SEPARATOR      $'\U232A'              # 〉
+      RIGHT_SUBSEGMENT_SEPARATOR     $'\U2329'              # 〈
 #      LEFT_SUBSEGMENT_SEPARATOR      $'\U2E3D'              # ⸽
 #      RIGHT_SUBSEGMENT_SEPARATOR     $'\U2E3D'              # ⸽
 #      LEFT_SUBSEGMENT_SEPARATOR      ''
