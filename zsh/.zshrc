@@ -71,7 +71,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(osx brew git gitextra pass autojump zsh-syntax-highlighting virtualenv virtualenvwrapper)
+plugins=(git gitextra pass autojump zsh-syntax-highlighting virtualenv virtualenvwrapper)
 
 # for virtualenv
 export WORKON_HOME=~/.virtualenv
@@ -106,6 +106,8 @@ _force_rehash() {
 # Enhancement for MacOS only
 if [ "`uname`" = "Darwin" ]
 then
+    # Add MacOS spicified plugin into plugin list
+    plugins=($plugins brew osx)
     # Enhance completion for iTerm2
     compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
     alias run='open -a'
@@ -190,5 +192,7 @@ hex_utf8(){
     python -c "from binascii import hexlify; print('\t'.join([\"$1\", hexlify(\"$1\")]))"
 }
 
-export NVM_DIR="/Users/zer4tul/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
