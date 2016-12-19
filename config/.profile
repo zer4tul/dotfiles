@@ -1,21 +1,51 @@
-# PATH settings
+# ~/.profile: executed by the command interpreter for login shells.
+# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
+# exists.
+# see /usr/share/doc/bash/examples/startup-files for examples.
+# the files are located in the bash-doc package.
 
-# local commands per user
-export PATH="$PATH:$HOME/bin:$HOME/.local/bin"
+# the default umask is set in /etc/profile; for setting the umask
+# for ssh logins, install and configure the libpam-umask package.
+#umask 022
 
-# Brew
-export PATH="/usr/local/sbin:/usr/local/bin:$PATH"
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
 
-# for GNU Coreutils
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
-export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set MacOS specific PATHs
+if [ "`uname`" = "Darwin" ]; then
+    # Brew
+    PATH="/usr/local/sbin:/usr/local/bin:$PATH"
+
+    # for GNU Coreutils
+    if [ -d "/usr/local/opt/coreutils/libexec/" ]; then
+        PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+        MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
+    fi
+fi
+
 
 # Golang
-export GOPATH=~/go
-export PATH="$PATH:$GOPATH/bin"
+GOPATH=~/go
+PATH="$PATH:$GOPATH/bin"
 
 # Python
-export PYTHONPATH="$PYTHONPATH:."
+PYTHONPATH="$PYTHONPATH:."
+
+
+export PATH
+export GOPATH
+export PYTHONPATH
+export MANPATH
 
 # Read local settings if .profile.local exists.
 if [ -f $HOME/.profile.local ]; then
