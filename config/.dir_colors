@@ -33,8 +33,8 @@
 # with this program.  If not, see <http://www.perlfoundation.org/artistic_license_1_0>.
 
 # core {{{1
-BLK                   38;5;68
-CAPABILITY            38;5;17
+BLK                   48;5;17;38;5;244
+CAPABILITY            38;5;21
 CHR                   38;5;113;1
 DIR                   38;5;80;1
 DOOR                  38;5;127
@@ -48,7 +48,7 @@ MULTIHARDLINK         38;5;222;1
 # https://github.com/trapd00r/LS_COLORS/issues/11
 #NORMAL                38;5;254
 NORMAL                0
-ORPHAN                48;5;196;38;5;232;1
+ORPHAN                48;5;124;38;5;249;1
 OTHER_WRITABLE        38;5;220;1
 SETGID                48;5;3;38;5;0
 SETUID                38;5;220;1;3;100;1
@@ -95,13 +95,15 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .RData                38;5;178
 .rdata                38;5;178
 # }}}
-# binary {{{2
+# ebook {{{2
 .cbr                  38;5;141
 .cbz                  38;5;141
 .chm                  38;5;141
 .djvu                 38;5;141
 .pdf                  38;5;141
 .PDF                  38;5;141
+.epub                 38;5;141
+.mobi                 38;5;141
 # words {{{3
 .docm                 38;5;111;4
 .doc                  38;5;111
@@ -186,27 +188,28 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .r                    38;5;49
 .R                    38;5;49
 # GrADS script
-.gs                   38;5;81
+.gs                   38;5;117;1
 
 # compiled {{{2
 #
 #   assembly language
-.asm                  38;5;81
+.asm                  38;5;117;1
 #   LISP
-.cl                   38;5;81
-.lisp                 38;5;81
+.cl                   38;5;117;1
+.lisp                 38;5;117;1
+.el                   38;5;117;1
 #   lua
-.lua                  38;5;81
+.lua                  38;5;117;1
 #   Moonscript
-.moon                 38;5;81
+.moon                 38;5;117;1
 #   C
-.c                    38;5;81
-.C                    38;5;81
+.c                    38;5;117;1
+.C                    38;5;117;1
 .h                    38;5;110
 .H                    38;5;110
 .tcc                  38;5;110
 #   C++
-.c++                  38;5;81
+.c++                  38;5;117;1
 .h++                  38;5;110
 .hpp                  38;5;110
 .hxx                  38;5;110
@@ -215,35 +218,36 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .M                    38;5;110
 .m                    38;5;110
 #   Csharp
-.cc                   38;5;81
-.cs                   38;5;81
-.cp                   38;5;81
-.cpp                  38;5;81
-.cxx                  38;5;81
+.cc                   38;5;117;1
+.cs                   38;5;117;1
+.cp                   38;5;117;1
+.cpp                  38;5;117;1
+.cxx                  38;5;117;1
 #   Crystal
-.cr                   38;5;81
+.cr                   38;5;117;1
 #   Google golang
-.go                   38;5;81
+.go                   38;5;117;1
 #   fortran
-.f                    38;5;81
-.for                  38;5;81
-.ftn                  38;5;81
+.f                    38;5;117;1
+.for                  38;5;117;1
+.ftn                  38;5;117;1
 #   pascal
 .s                    38;5;110
 .S                    38;5;110
 #   Rust
-.rs                   38;5;81
+.rs                   38;5;117;1
 #   ?
-.sx                   38;5;81
+.sx                   38;5;117;1
 #   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
 .hi                   38;5;110
 #   haskell
-.hs                   38;5;81
-.lhs                  38;5;81
+.hs                   38;5;117;1
+.lhs                  38;5;117;1
 
 # binaries {{{2
 # compiled apps for interpreted languages
 .pyc                  38;5;240
+.elc                  38;5;240
 # }}}
 # html {{{2
 .css                  38;5;125;1
@@ -266,16 +270,16 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .jsp                  38;5;074;1
 # }}}
 # php {{{2
-.php                  38;5;81
+.php                  38;5;117;1
 #   CakePHP view scripts and helpers
-.ctp                  38;5;81
+.ctp                  38;5;117;1
 #   Twig template engine
-.twig                 38;5;81
+.twig                 38;5;117;1
 # }}}
 # vb/a {{{2
-.vb                   38;5;81
-.vba                  38;5;81
-.vbs                  38;5;81
+.vb                   38;5;117;1
+.vba                  38;5;117;1
+.vbs                  38;5;117;1
 # 2}}}
 # Build stuff {{{2
 *Dockerfile           38;5;155
@@ -294,24 +298,24 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .SKIP                 38;5;244
 # }}}
 # patch files {{{2
-.diff                 48;5;197;38;5;232
-.patch                48;5;197;38;5;232;1
+.diff                 48;5;213;38;5;232
+.patch                48;5;213;38;5;232;1
 #}}}
 # graphics {{{1
-.bmp                  38;5;97
-.tiff                 38;5;97
-.tif                  38;5;97
-.TIFF                 38;5;97
-.cdr                  38;5;97
-.gif                  38;5;97
-.ico                  38;5;97
-.jpeg                 38;5;97
-.JPG                  38;5;97
-.jpg                  38;5;97
-.nth                  38;5;97
-.png                  38;5;97
-.psd                  38;5;97
-.xpm                  38;5;97
+.bmp                  38;5;131;1
+.tiff                 38;5;131;1
+.tif                  38;5;131;1
+.TIFF                 38;5;131;1
+.cdr                  38;5;131;1
+.gif                  38;5;131;1
+.ico                  38;5;131;1
+.jpeg                 38;5;131;1
+.JPG                  38;5;131;1
+.jpg                  38;5;131;1
+.nth                  38;5;131;1
+.png                  38;5;131;1
+.psd                  38;5;131;1
+.xpm                  38;5;131;1
 # }}}
 # vector {{{1
 .ai                   38;5;99
@@ -435,6 +439,8 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .vpk                  38;5;215
 .bsp                  38;5;215
 .dmg                  38;5;215
+.img                  38;5;215
+.smi                  38;5;215
   # }}}
   # segments {{{2
 .r00                  38;5;239
@@ -789,7 +795,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .part                 38;5;239
   # }}}
 # partition images {{{2
-.dmg                  38;5;124
 .iso                  38;5;124
 .bin                  38;5;124
 .nrg                  38;5;124
@@ -835,14 +840,14 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .state                38;5;248
 *lockfile             38;5;248
 # error logs
-.err                  38;5;160;1
-.error                38;5;160;1
-.stderr               38;5;160;1
+.err                  48;5;196;38;5;232;1
+.error                48;5;196;38;5;232;1
+.stderr               48;5;196;38;5;232;1
 # state dumps
-.dump                 38;5;241
-.stackdump            38;5;241
-.zcompdump            38;5;241
-.zwc                  38;5;241
+.dump                 48;5;166;38;5;234
+.stackdump            48;5;166;38;5;234
+.zcompdump            48;5;166;38;5;234
+.zwc                  48;5;166;38;5;234
 # tcpdump, network traffic capture
 .pcap                 38;5;29
 .cap                  38;5;29
