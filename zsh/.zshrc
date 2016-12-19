@@ -10,6 +10,67 @@ ZSH_CUSTOM=$HOME/.zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
+# Icon settings
+#LEFT_SEGMENT_SEPARATOR         $'\U2BC8'             # ⯈
+#RIGHT_SEGMENT_SEPARATOR        $'\U2BC7'             # ⯇
+LEFT_SEGMENT_SEPARATOR         $'\U276F'              # ❯
+RIGHT_SEGMENT_SEPARATOR        $'\U276E'              # ❮
+#LEFT_SEGMENT_SEPARATOR         $'\U2591'             # ░
+#RIGHT_SEGMENT_SEPARATOR        $'\U2591'             # ░
+#LEFT_SEGMENT_SEPARATOR         $'\U2592'             # ▒
+#RIGHT_SEGMENT_SEPARATOR        $'\U2592'             # ▒
+LEFT_SEGMENT_END_SEPARATOR     ' '                    # Whitespace
+LEFT_SUBSEGMENT_SEPARATOR      $'\U232A'              # 〉
+RIGHT_SUBSEGMENT_SEPARATOR     $'\U2329'              # 〈
+#LEFT_SUBSEGMENT_SEPARATOR      $'\U2E3D'             # ⸽
+#RIGHT_SUBSEGMENT_SEPARATOR     $'\U2E3D'             # ⸽
+#LEFT_SUBSEGMENT_SEPARATOR      ''
+#RIGHT_SUBSEGMENT_SEPARATOR     ''
+CARRIAGE_RETURN_ICON           $'\U21B5'              # ↵
+ROOT_ICON                      $'\U26A1'              # ⚡
+RUBY_ICON                      ''
+AWS_ICON                       'AWS:'
+AWS_EB_ICON                    $'\U1F331 '            # 🌱
+BACKGROUND_JOBS_ICON           $'\U2699'              # ⚙
+TEST_ICON                      ''
+TODO_ICON                      $'\U2611'              # ☑
+BATTERY_ICON                   $'\U1F50B'             # 🔋
+OK_ICON                        $'\U2713'              # ✓
+FAIL_ICON                      $'\U2718'              # ✘
+SYMFONY_ICON                   'SF'
+NODE_ICON                      $'\U2B22'              # ⬢
+MULTILINE_FIRST_PROMPT_PREFIX  $'\U256D'$'\U2500'
+MULTILINE_SECOND_PROMPT_PREFIX $'\U2570'$'\U2500 '
+APPLE_ICON                     $'\uF8FF'              # 
+FREEBSD_ICON                   $'\U0001F608 '            # 😈
+LINUX_ICON                     $'\U0001F427'          # 🐧
+SUNOS_ICON                     'Sun'
+HOME_ICON                      $'\U0001F3E0'          # 🏠
+HOME_SUB_ICON                  $'\U0001F4C2'          # 📂
+FOLDER_ICON                    $'\U0001F4C1'          # 📁
+NETWORK_ICON                   'IP'
+LOAD_ICON                      'L'
+SWAP_ICON                      'SWP'
+RAM_ICON                       'RAM'
+SERVER_ICON                    ''
+VCS_UNTRACKED_ICON             '?'
+VCS_UNSTAGED_ICON              $'\U25CF'              # ●
+VCS_STAGED_ICON                $'\U271A'              # ✚
+VCS_STASH_ICON                 $'\U235F'              # ⍟
+VCS_INCOMING_CHANGES_ICON      $'\U2B8B '             # ⮋
+VCS_OUTGOING_CHANGES_ICON      $'\U2B89 '             # ⮉
+VCS_TAG_ICON                   ''
+VCS_BOOKMARK_ICON              $'\U0001F516'          # 🔖
+VCS_COMMIT_ICON                $'\U29F2'              # ⧲
+VCS_BRANCH_ICON                $'\U2387 '             # ⎇
+VCS_REMOTE_BRANCH_ICON         $'\U2192'              # →
+VCS_GIT_ICON                   $'\U24D6'              # ⓖ
+VCS_HG_ICON                    $'\U24D7'              # ⓗ
+VCS_SVN_ICON                   $'\U24E2'              # ⓢ
+RUST_ICON                      ''
+PYTHON_ICON                    $'\U1F40D'             # 🐍
+
+
 # theme specific settings
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(virtualenv vcs status)
@@ -142,29 +203,29 @@ fi
 TOKENS_FOLLOWED_BY_COMMANDS=('|' '||' ';' '&' '&&' 'sudo' 'do' 'time' 'strace')
 
 recolor-cmd() {
-    region_highlight=()
-    colorize=true
-    start_pos=0
-    for arg in ${(z)BUFFER}; do
-        ((start_pos+=${#BUFFER[$start_pos+1,-1]}-${#${BUFFER[$start_pos+1,-1]## #}}))
-        ((end_pos=$start_pos+${#arg}))
-        if $colorize; then
-            colorize=false
-            res=$(LC_ALL=C builtin type $arg 2>/dev/null)
-            case $res in
-                *'reserved word'*)   style="fg=magenta,bold";;
-                *'alias for'*)       style="fg=cyan,bold";;
-                *'shell builtin'*)   style="fg=yellow,bold";;
-                *'shell function'*)  style='fg=green,bold';;
-                *"$arg is"*)
-                    [[ $arg = 'sudo' ]] && style="fg=red,bold" || style="fg=blue,bold";;
-                *)                   style='none,bold';;
-            esac
-            region_highlight+=("$start_pos $end_pos $style")
-        fi
-        [[ ${${TOKENS_FOLLOWED_BY_COMMANDS[(r)${arg//|/\|}]}:+yes} = 'yes' ]] && colorize=true
-        start_pos=$end_pos
-    done
+region_highlight=()
+colorize=true
+start_pos=0
+for arg in ${(z)BUFFER}; do
+    ((start_pos+=${#BUFFER[$start_pos+1,-1]}-${#${BUFFER[$start_pos+1,-1]## #}}))
+    ((end_pos=$start_pos+${#arg}))
+    if $colorize; then
+        colorize=false
+        res=$(LC_ALL=C builtin type $arg 2>/dev/null)
+        case $res in
+            *'reserved word'*)   style="fg=magenta,bold";;
+            *'alias for'*)       style="fg=cyan,bold";;
+            *'shell builtin'*)   style="fg=yellow,bold";;
+            *'shell function'*)  style='fg=green,bold';;
+            *"$arg is"*)
+                [[ $arg = 'sudo' ]] && style="fg=red,bold" || style="fg=blue,bold";;
+            *)                   style='none,bold';;
+        esac
+        region_highlight+=("$start_pos $end_pos $style")
+    fi
+    [[ ${${TOKENS_FOLLOWED_BY_COMMANDS[(r)${arg//|/\|}]}:+yes} = 'yes' ]] && colorize=true
+    start_pos=$end_pos
+done
 }
 
 check-cmd-self-insert() { zle .self-insert && recolor-cmd }
