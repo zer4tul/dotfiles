@@ -11,64 +11,64 @@ ZSH_CUSTOM=$HOME/.zsh
 ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Icon settings
-#LEFT_SEGMENT_SEPARATOR         $'\U2BC8'             # ⯈
-#RIGHT_SEGMENT_SEPARATOR        $'\U2BC7'             # ⯇
-LEFT_SEGMENT_SEPARATOR         $'\U276F'              # ❯
-RIGHT_SEGMENT_SEPARATOR        $'\U276E'              # ❮
-#LEFT_SEGMENT_SEPARATOR         $'\U2591'             # ░
-#RIGHT_SEGMENT_SEPARATOR        $'\U2591'             # ░
-#LEFT_SEGMENT_SEPARATOR         $'\U2592'             # ▒
-#RIGHT_SEGMENT_SEPARATOR        $'\U2592'             # ▒
-LEFT_SEGMENT_END_SEPARATOR     ' '                    # Whitespace
-LEFT_SUBSEGMENT_SEPARATOR      $'\U232A'              # 〉
-RIGHT_SUBSEGMENT_SEPARATOR     $'\U2329'              # 〈
-#LEFT_SUBSEGMENT_SEPARATOR      $'\U2E3D'             # ⸽
-#RIGHT_SUBSEGMENT_SEPARATOR     $'\U2E3D'             # ⸽
-#LEFT_SUBSEGMENT_SEPARATOR      ''
-#RIGHT_SUBSEGMENT_SEPARATOR     ''
-CARRIAGE_RETURN_ICON           $'\U21B5'              # ↵
-ROOT_ICON                      $'\U26A1'              # ⚡
-RUBY_ICON                      ''
-AWS_ICON                       'AWS:'
-AWS_EB_ICON                    $'\U1F331 '            # 🌱
-BACKGROUND_JOBS_ICON           $'\U2699'              # ⚙
-TEST_ICON                      ''
-TODO_ICON                      $'\U2611'              # ☑
-BATTERY_ICON                   $'\U1F50B'             # 🔋
-OK_ICON                        $'\U2713'              # ✓
-FAIL_ICON                      $'\U2718'              # ✘
-SYMFONY_ICON                   'SF'
-NODE_ICON                      $'\U2B22'              # ⬢
-MULTILINE_FIRST_PROMPT_PREFIX  $'\U256D'$'\U2500'
-MULTILINE_SECOND_PROMPT_PREFIX $'\U2570'$'\U2500 '
-APPLE_ICON                     $'\uF8FF'              # 
-FREEBSD_ICON                   $'\U0001F608 '            # 😈
-LINUX_ICON                     $'\U0001F427'          # 🐧
-SUNOS_ICON                     'Sun'
-HOME_ICON                      $'\U0001F3E0'          # 🏠
-HOME_SUB_ICON                  $'\U0001F4C2'          # 📂
-FOLDER_ICON                    $'\U0001F4C1'          # 📁
-NETWORK_ICON                   'IP'
-LOAD_ICON                      'L'
-SWAP_ICON                      'SWP'
-RAM_ICON                       'RAM'
-SERVER_ICON                    ''
-VCS_UNTRACKED_ICON             '?'
-VCS_UNSTAGED_ICON              $'\U25CF'              # ●
-VCS_STAGED_ICON                $'\U271A'              # ✚
-VCS_STASH_ICON                 $'\U235F'              # ⍟
-VCS_INCOMING_CHANGES_ICON      $'\U2B8B '             # ⮋
-VCS_OUTGOING_CHANGES_ICON      $'\U2B89 '             # ⮉
-VCS_TAG_ICON                   ''
-VCS_BOOKMARK_ICON              $'\U0001F516'          # 🔖
-VCS_COMMIT_ICON                $'\U29F2'              # ⧲
-VCS_BRANCH_ICON                $'\U2387 '             # ⎇
-VCS_REMOTE_BRANCH_ICON         $'\U2192'              # →
-VCS_GIT_ICON                   $'\U24D6'              # ⓖ
-VCS_HG_ICON                    $'\U24D7'              # ⓗ
-VCS_SVN_ICON                   $'\U24E2'              # ⓢ
-RUST_ICON                      ''
-PYTHON_ICON                    $'\U1F40D'             # 🐍
+#POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U2BC8'                  # ⯈
+#POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\U2BC7'                 # ⯇
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U276F'                   # ❯
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\U276E'                  # ❮
+#POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U2591'                  # ░
+#POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\U2591'                 # ░
+#POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U2592'                  # ▒
+#POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\U2592'                 # ▒
+POWERLEVEL9K_LEFT_SEGMENT_END_SEPARATOR=' '                     # Whitespace
+POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=$'\U232A'                # 〉
+POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=$'\U2329'               # 〈
+#POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=$'\U2E3D'               # ⸽
+#POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=$'\U2E3D'              # ⸽
+#POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=''
+#POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=''
+POWERLEVEL9K_CARRIAGE_RETURN_ICON=$'\U21B5'                     # ↵
+POWERLEVEL9K_ROOT_ICON=$'\U26A1'                                # ⚡
+POWERLEVEL9K_RUBY_ICON=''
+POWERLEVEL9K_AWS_ICON='AWS:'
+POWERLEVEL9K_AWS_EB_ICON=$'\U1F331 '                            # 🌱
+POWERLEVEL9K_BACKGROUND_JOBS_ICON=$'\U2699'                     # ⚙
+POWERLEVEL9K_TEST_ICON=''
+POWERLEVEL9K_TODO_ICON=$'\U2611'                                # ☑
+POWERLEVEL9K_BATTERY_ICON=$'\U1F50B'                            # 🔋
+POWERLEVEL9K_OK_ICON=$'\U2713'                                  # ✓
+POWERLEVEL9K_FAIL_ICON=$'\U2718'                                # ✘
+POWERLEVEL9K_SYMFONY_ICON='SF'
+POWERLEVEL9K_NODE_ICON=$'\U2B22'                                # ⬢
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=$'\U256D'$'\U2500'   # ╭─
+POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX=$'\U2570'$'\U2500 ' # ╰─
+POWERLEVEL9K_APPLE_ICON=$'\uF8FF'                               # 
+POWERLEVEL9K_FREEBSD_ICON=$'\U0001F608 '                        # 😈
+POWERLEVEL9K_LINUX_ICON=$'\U0001F427'                           # 🐧
+POWERLEVEL9K_SUNOS_ICON='Sun'
+POWERLEVEL9K_HOME_ICON=$'\U0001F3E0'                            # 🏠
+POWERLEVEL9K_HOME_SUB_ICON=$'\U0001F4C2'                        # 📂
+POWERLEVEL9K_FOLDER_ICON=$'\U0001F4C1'                          # 📁
+POWERLEVEL9K_NETWORK_ICON='IP'
+POWERLEVEL9K_LOAD_ICON='L'
+POWERLEVEL9K_SWAP_ICON='SWP'
+POWERLEVEL9K_RAM_ICON='RAM'
+POWERLEVEL9K_SERVER_ICON=''
+POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
+POWERLEVEL9K_VCS_UNSTAGED_ICON=$'\U25CF'                        # ●
+POWERLEVEL9K_VCS_STAGED_ICON=$'\U271A'                          # ✚
+POWERLEVEL9K_VCS_STASH_ICON=$'\U235F'                           # ⍟
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON=$'\U2B8B '               # ⮋
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON=$'\U2B89 '               # ⮉
+POWERLEVEL9K_VCS_TAG_ICON=''
+POWERLEVEL9K_VCS_BOOKMARK_ICON=$'\U0001F516'                    # 🔖
+POWERLEVEL9K_VCS_COMMIT_ICON=$'\U29F2'                          # ⧲
+POWERLEVEL9K_VCS_BRANCH_ICON=$'\U2387 '                         # ⎇
+POWERLEVEL9K_VCS_REMOTE_BRANCH_ICON=$'\U2192'                   # →
+POWERLEVEL9K_VCS_GIT_ICON=$'\U24D6'                             # ⓖ
+POWERLEVEL9K_VCS_HG_ICON=$'\U24D7'                              # ⓗ
+POWERLEVEL9K_VCS_SVN_ICON=$'\U24E2'                             # ⓢ
+POWERLEVEL9K_RUST_ICON=''
+POWERLEVEL9K_PYTHON_ICON=$'\U1F40D'                             # 🐍
 
 
 # theme specific settings
