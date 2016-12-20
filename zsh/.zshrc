@@ -192,7 +192,7 @@ fi
 #show 256 color tab
 256tab() {
     for k in `seq 0 1`;do 
-        for j in `seq $((16+k*18)) 36 $((196+k*18))`;do 
+        for j in `seq $((0+k*18)) 36 $((196+k*18))`;do 
             for i in `seq $j $((j+17))`; do 
                 printf "\e[01;$1;38;5;%sm%4s" $i $i;
             done;echo;

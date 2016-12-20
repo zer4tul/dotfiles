@@ -31,60 +31,82 @@
 #
 # You should have received a copy of the Perl Artistic License along
 # with this program.  If not, see <http://www.perlfoundation.org/artistic_license_1_0>.
+#
+# ANSI escape code refer: https://en.wikipedia.org/wiki/ANSI_escape_code
+#
+# NOTE: Blink may or may not work ( iTerm2 disabled blink by default.)
 
-# core {{{1
-BLK                   48;5;17;38;5;244
-CAPABILITY            38;5;21
-CHR                   38;5;113;1
-DIR                   38;5;80;1
-DOOR                  38;5;127
-EXEC                  38;5;208;1
-FIFO                  38;5;126
-FILE                  0
-LINK                  38;5;177
-#LINK                  target
-MULTIHARDLINK         38;5;222;1
 # "NORMAL don't reset the bold attribute -
 # https://github.com/trapd00r/LS_COLORS/issues/11
-#NORMAL                38;5;254
-NORMAL                0
-ORPHAN                48;5;124;38;5;249;1
-OTHER_WRITABLE        38;5;220;1
-SETGID                48;5;3;38;5;0
-SETUID                38;5;220;1;3;100;1
-SOCK                  38;5;197
-STICKY                38;5;86;48;5;234
-STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
+
+# core {{{1
+# File type
+NORMAL                0                     # no color code at all
+FILE                  0                     # regular file: use no color at all
+RESET                 0                     # reset to "NORMAL" color
+DIR                   38;5;6;1             # directory
+LINK                  38;5;5              # symbolic link.  (If your set this
+#LINK                 target                # to 'target' instead of a numerical
+                                            # value, the color is as for the
+                                            # file pointed to.)
+MULTIHARDLINK         38;5;7;4              # regular file with more than one
+                                            # link
+FIFO                  38;5;126              # pipe
+SOCK                  38;5;126              # socket
+DOOR                  38;5;126              # Solaris 2.5 and later
+                                            # and not other-writable
+# devices ( blue bg)
+#BLK                   48;5;17;38;5;244      # block device driver
+#CHR                   48;5;17;38;5;113;1            # character device driver
+BLK                   48;5;0;38;5;3;1            # block device driver
+CHR                   48;5;0;38;5;3;4            # character device driver
+
+# File attributes
+ORPHAN                48;5;124;38;5;249;5   # link symlink to nonexistent file,
+                                            # or non-stat'able file
+#MISSING               05;37;45             # ... and the files they point to
+                                            # avaliable in coreutils >= 8.24
+                                            # and not sticky
+SETUID                48;5;1;38;5;7;1       # file that is setgid (g+s)
+SETGID                48;5;3;38;5;0         # file that is setuid (u+s)
+CAPABILITY            48;5;1;38;5;0         # file with capability. see xattr(7)
+STICKY_OTHER_WRITABLE 48;5;2;38;5;0         # dir that is sticky and
+                                            # other-writable (+t,o+w)
+OTHER_WRITABLE        48;5;2;38;5;4         # dir that is other-writable (o+w)
+STICKY                48;5;4;38;5;7         # dir with the sticky bit set (+t)
+                                            # and not other-writable
+
+# This is for files with execute permission:
+EXEC                  38;5;208;1
 
 *LS_COLORS 48;5;89;38;5;197;1;3;4;7 # :-)
 # }}}
 # documents {{{1
-*README               38;5;220;1
-*README.rst           38;5;220;1
-*LICENSE              38;5;220;1
-*COPYING              38;5;220;1
-*INSTALL              38;5;220;1
-*COPYRIGHT            38;5;220;1
-*AUTHORS              38;5;220;1
-*HISTORY              38;5;220;1
-*CONTRIBUTORS         38;5;220;1
-*PATENTS              38;5;220;1
-*VERSION              38;5;220;1
-*NOTICE               38;5;220;1
-*CHANGES              38;5;220;1
+# text file {{{2
+.asciidoc             38;5;229
+.adoc                 38;5;229
+.creole               38;5;229
+.etx                  38;5;229
+.info                 38;5;229
+.markdown             38;5;229
+.rst                  38;5;229
+.md                   38;5;229
+.mkd                  38;5;229
+.mkdn                 38;5;229
+.mdown                38;5;229
+.mediawiki            38;5;229
+.wiki                 38;5;229
+.nfo                  38;5;229
+.org                  38;5;229
+.pod                  38;5;229
+.rdoc                 38;5;229
+.tex                  38;5;229
+.textile              38;5;229
+
+# log file
 .log                  38;5;190
 # plain-text {{{2
 .txt                  38;5;253
-# markup {{{2
-.etx                  38;5;184
-.info                 38;5;184
-.markdown             38;5;184
-.md                   38;5;184
-.mkd                  38;5;184
-.nfo                  38;5;184
-.pod                  38;5;184
-.tex                  38;5;184
-.textile              38;5;184
 # key-value, non-relational data {{{2
 .json                 38;5;178
 .msg                  38;5;178
@@ -104,17 +126,24 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .PDF                  38;5;141
 .epub                 38;5;141
 .mobi                 38;5;141
+.eps                  38;5;141
+.ps                   38;5;141
+
 # words {{{3
+# Microsoft Office
 .docm                 38;5;111;4
 .doc                  38;5;111
 .docx                 38;5;111
-.eps                  38;5;111
-.ps                   38;5;111
+# Openoffice/Libreoffice
 .odb                  38;5;111
 .odt                  38;5;111
+.fodt                 38;5;111
 .rtf                  38;5;111
+# Apple iWork Pages
+.pages                38;5;111
+
 # presentation {{{3
-.odp                  38;5;166
+# Microsoft Office
 .pps                  38;5;166
 .ppt                  38;5;166
 .pptx                 38;5;166
@@ -124,19 +153,27 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pptxm                38;5;166;4
 #   Powerpoint show with enabled macros
 .pptsm                38;5;166;4
+# Openoffice/Libreoffice
+.odp                  38;5;166
+.fodp                 38;5;166
+# Apple iWork Keynote
+.key                  38;5;166
+.kth                  38;5;166
 # spreadsheet {{{3
 .csv                  38;5;78
-#   Open document spreadsheet
-.ods                  38;5;112
-.xla                  38;5;76
 #   Excel spreadsheet
 .xls                  38;5;112
 .xlsx                 38;5;112
 #   Excel spreadsheet with macros
 .xlsxm                38;5;112;4
 #   Excel module
-.xltm                 38;5;73;4
-.xltx                 38;5;73
+.xltm                 38;5;112;4
+.xltx                 38;5;112
+# Openoffice/Libreoffice
+.ods                  38;5;112
+.fods                 38;5;112
+# Apple iWork Numbers
+.numbers              38;5;112
 # }}}
 # }}}
 # configs {{{2
@@ -167,49 +204,52 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .sed                  38;5;172
 .sh                   38;5;172
 .zsh                  38;5;172
+.fish                 38;5;172
 .vim                  38;5;172
 
 # interpreted {{{2
 .ahk                  38;5;41
 # python
 .py                   38;5;41
+# ruby
+.rb                   38;5;41
 # perl
 .pl                   38;5;208
 .PL                   38;5;160
 .t                    38;5;114
-# sql
-.msql                 38;5;222
-.mysql                38;5;222
-.pgsql                38;5;222
-.sql                  38;5;222
 #   Tool Command Language
 .tcl                  38;5;64;1
 # R language
 .r                    38;5;49
 .R                    38;5;49
 # GrADS script
-.gs                   38;5;117;1
+.gs                   38;5;110;1
 
+# sql {{{2
+.msql                 38;5;222
+.mysql                38;5;222
+.pgsql                38;5;222
+.sql                  38;5;222
 # compiled {{{2
 #
 #   assembly language
-.asm                  38;5;117;1
+.asm                  38;5;110;1
 #   LISP
-.cl                   38;5;117;1
-.lisp                 38;5;117;1
-.el                   38;5;117;1
+.cl                   38;5;110;1
+.lisp                 38;5;110;1
+.el                   38;5;110;1
 #   lua
-.lua                  38;5;117;1
+.lua                  38;5;110;1
 #   Moonscript
-.moon                 38;5;117;1
+.moon                 38;5;110;1
 #   C
-.c                    38;5;117;1
-.C                    38;5;117;1
+.c                    38;5;110;1
+.C                    38;5;110;1
 .h                    38;5;110
 .H                    38;5;110
 .tcc                  38;5;110
 #   C++
-.c++                  38;5;117;1
+.c++                  38;5;110;1
 .h++                  38;5;110
 .hpp                  38;5;110
 .hxx                  38;5;110
@@ -218,31 +258,31 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .M                    38;5;110
 .m                    38;5;110
 #   Csharp
-.cc                   38;5;117;1
-.cs                   38;5;117;1
-.cp                   38;5;117;1
-.cpp                  38;5;117;1
-.cxx                  38;5;117;1
+.cc                   38;5;110;1
+.cs                   38;5;110;1
+.cp                   38;5;110;1
+.cpp                  38;5;110;1
+.cxx                  38;5;110;1
 #   Crystal
-.cr                   38;5;117;1
+.cr                   38;5;110;1
 #   Google golang
-.go                   38;5;117;1
+.go                   38;5;110;1
 #   fortran
-.f                    38;5;117;1
-.for                  38;5;117;1
-.ftn                  38;5;117;1
+.f                    38;5;110;1
+.for                  38;5;110;1
+.ftn                  38;5;110;1
 #   pascal
 .s                    38;5;110
 .S                    38;5;110
 #   Rust
-.rs                   38;5;117;1
+.rs                   38;5;110;1
 #   ?
-.sx                   38;5;117;1
+.sx                   38;5;110;1
 #   interface file in GHC - https://github.com/trapd00r/LS_COLORS/pull/9
 .hi                   38;5;110
 #   haskell
-.hs                   38;5;117;1
-.lhs                  38;5;117;1
+.hs                   38;5;110;1
+.lhs                  38;5;110;1
 
 # binaries {{{2
 # compiled apps for interpreted languages
@@ -270,16 +310,16 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .jsp                  38;5;074;1
 # }}}
 # php {{{2
-.php                  38;5;117;1
+.php                  38;5;110;1
 #   CakePHP view scripts and helpers
-.ctp                  38;5;117;1
+.ctp                  38;5;110;1
 #   Twig template engine
-.twig                 38;5;117;1
+.twig                 38;5;110;1
 # }}}
 # vb/a {{{2
-.vb                   38;5;117;1
-.vba                  38;5;117;1
-.vbs                  38;5;117;1
+.vb                   38;5;110;1
+.vba                  38;5;110;1
+.vbs                  38;5;110;1
 # 2}}}
 # Build stuff {{{2
 *Dockerfile           38;5;155
@@ -442,357 +482,10 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .img                  38;5;215
 .smi                  38;5;215
   # }}}
-  # segments {{{2
-.r00                  38;5;239
-.r01                  38;5;239
-.r02                  38;5;239
-.r03                  38;5;239
-.r04                  38;5;239
-.r05                  38;5;239
-.r06                  38;5;239
-.r07                  38;5;239
-.r08                  38;5;239
-.r09                  38;5;239
-.r10                  38;5;239
-.r100                 38;5;239
-.r101                 38;5;239
-.r102                 38;5;239
-.r103                 38;5;239
-.r104                 38;5;239
-.r105                 38;5;239
-.r106                 38;5;239
-.r107                 38;5;239
-.r108                 38;5;239
-.r109                 38;5;239
-.r11                  38;5;239
-.r110                 38;5;239
-.r111                 38;5;239
-.r112                 38;5;239
-.r113                 38;5;239
-.r114                 38;5;239
-.r115                 38;5;239
-.r116                 38;5;239
-.r12                  38;5;239
-.r13                  38;5;239
-.r14                  38;5;239
-.r15                  38;5;239
-.r16                  38;5;239
-.r17                  38;5;239
-.r18                  38;5;239
-.r19                  38;5;239
-.r20                  38;5;239
-.r21                  38;5;239
-.r22                  38;5;239
-.r25                  38;5;239
-.r26                  38;5;239
-.r27                  38;5;239
-.r28                  38;5;239
-.r29                  38;5;239
-.r30                  38;5;239
-.r31                  38;5;239
-.r32                  38;5;239
-.r33                  38;5;239
-.r34                  38;5;239
-.r35                  38;5;239
-.r36                  38;5;239
-.r37                  38;5;239
-.r38                  38;5;239
-.r39                  38;5;239
-.r40                  38;5;239
-.r41                  38;5;239
-.r42                  38;5;239
-.r43                  38;5;239
-.r44                  38;5;239
-.r45                  38;5;239
-.r46                  38;5;239
-.r47                  38;5;239
-.r48                  38;5;239
-.r49                  38;5;239
-.r50                  38;5;239
-.r51                  38;5;239
-.r52                  38;5;239
-.r53                  38;5;239
-.r54                  38;5;239
-.r55                  38;5;239
-.r56                  38;5;239
-.r57                  38;5;239
-.r58                  38;5;239
-.r59                  38;5;239
-.r60                  38;5;239
-.r61                  38;5;239
-.r62                  38;5;239
-.r63                  38;5;239
-.r64                  38;5;239
-.r65                  38;5;239
-.r66                  38;5;239
-.r67                  38;5;239
-.r68                  38;5;239
-.r69                  38;5;239
-.r69                  38;5;239
-.r70                  38;5;239
-.r71                  38;5;239
-.r72                  38;5;239
-.r73                  38;5;239
-.r74                  38;5;239
-.r75                  38;5;239
-.r76                  38;5;239
-.r77                  38;5;239
-.r78                  38;5;239
-.r79                  38;5;239
-.r80                  38;5;239
-.r81                  38;5;239
-.r82                  38;5;239
-.r83                  38;5;239
-.r84                  38;5;239
-.r85                  38;5;239
-.r86                  38;5;239
-.r87                  38;5;239
-.r88                  38;5;239
-.r89                  38;5;239
-.r90                  38;5;239
-.r91                  38;5;239
-.r92                  38;5;239
-.r93                  38;5;239
-.r94                  38;5;239
-.r95                  38;5;239
-.r96                  38;5;239
-.r97                  38;5;239
-.r98                  38;5;239
-.r99                  38;5;239
-.zx00                  38;5;239
-.zx01                  38;5;239
-.zx02                  38;5;239
-.zx03                  38;5;239
-.zx04                  38;5;239
-.zx05                  38;5;239
-.zx06                  38;5;239
-.zx07                  38;5;239
-.zx08                  38;5;239
-.zx09                  38;5;239
-.zx10                  38;5;239
-.zx11                  38;5;239
-.zx12                  38;5;239
-.zx13                  38;5;239
-.zx14                  38;5;239
-.zx15                  38;5;239
-.zx16                  38;5;239
-.zx17                  38;5;239
-.zx18                  38;5;239
-.zx19                  38;5;239
-.zx20                  38;5;239
-.zx21                  38;5;239
-.zx22                  38;5;239
-.zx25                  38;5;239
-.zx26                  38;5;239
-.zx27                  38;5;239
-.zx28                  38;5;239
-.zx29                  38;5;239
-.zx30                  38;5;239
-.zx31                  38;5;239
-.zx32                  38;5;239
-.zx33                  38;5;239
-.zx34                  38;5;239
-.zx35                  38;5;239
-.zx36                  38;5;239
-.zx37                  38;5;239
-.zx38                  38;5;239
-.zx39                  38;5;239
-.zx40                  38;5;239
-.zx41                  38;5;239
-.zx42                  38;5;239
-.zx43                  38;5;239
-.zx44                  38;5;239
-.zx45                  38;5;239
-.zx46                  38;5;239
-.zx47                  38;5;239
-.zx48                  38;5;239
-.zx49                  38;5;239
-.zx50                  38;5;239
-.zx51                  38;5;239
-.zx52                  38;5;239
-.zx53                  38;5;239
-.zx54                  38;5;239
-.zx55                  38;5;239
-.zx56                  38;5;239
-.zx57                  38;5;239
-.zx58                  38;5;239
-.zx59                  38;5;239
-.zx60                  38;5;239
-.zx61                  38;5;239
-.zx62                  38;5;239
-.zx63                  38;5;239
-.zx64                  38;5;239
-.zx65                  38;5;239
-.zx66                  38;5;239
-.zx67                  38;5;239
-.zx68                  38;5;239
-.zx69                  38;5;239
-.zx69                  38;5;239
-.zx70                  38;5;239
-.zx71                  38;5;239
-.zx72                  38;5;239
-.zx73                  38;5;239
-.zx74                  38;5;239
-.zx75                  38;5;239
-.zx76                  38;5;239
-.zx77                  38;5;239
-.zx78                  38;5;239
-.zx79                  38;5;239
-.zx80                  38;5;239
-.zx81                  38;5;239
-.zx82                  38;5;239
-.zx83                  38;5;239
-.zx84                  38;5;239
-.zx85                  38;5;239
-.zx86                  38;5;239
-.zx87                  38;5;239
-.zx88                  38;5;239
-.zx89                  38;5;239
-.zx90                  38;5;239
-.zx91                  38;5;239
-.zx92                  38;5;239
-.zx93                  38;5;239
-.zx94                  38;5;239
-.zx95                  38;5;239
-.zx96                  38;5;239
-.zx97                  38;5;239
-.zx98                  38;5;239
-.zx99                  38;5;239
-.zx100                 38;5;239
-.zx101                 38;5;239
-.zx102                 38;5;239
-.zx103                 38;5;239
-.zx104                 38;5;239
-.zx105                 38;5;239
-.zx106                 38;5;239
-.zx107                 38;5;239
-.zx108                 38;5;239
-.zx109                 38;5;239
-.zx110                 38;5;239
-.zx111                 38;5;239
-.zx112                 38;5;239
-.zx113                 38;5;239
-.zx114                 38;5;239
-.zx115                 38;5;239
-.zx116                 38;5;239
-.z00                  38;5;239
-.z01                  38;5;239
-.z02                  38;5;239
-.z03                  38;5;239
-.z04                  38;5;239
-.z05                  38;5;239
-.z06                  38;5;239
-.z07                  38;5;239
-.z08                  38;5;239
-.z09                  38;5;239
-.z10                  38;5;239
-.z11                  38;5;239
-.z12                  38;5;239
-.z13                  38;5;239
-.z14                  38;5;239
-.z15                  38;5;239
-.z16                  38;5;239
-.z17                  38;5;239
-.z18                  38;5;239
-.z19                  38;5;239
-.z20                  38;5;239
-.z21                  38;5;239
-.z22                  38;5;239
-.z25                  38;5;239
-.z26                  38;5;239
-.z27                  38;5;239
-.z28                  38;5;239
-.z29                  38;5;239
-.z30                  38;5;239
-.z31                  38;5;239
-.z32                  38;5;239
-.z33                  38;5;239
-.z34                  38;5;239
-.z35                  38;5;239
-.z36                  38;5;239
-.z37                  38;5;239
-.z38                  38;5;239
-.z39                  38;5;239
-.z40                  38;5;239
-.z41                  38;5;239
-.z42                  38;5;239
-.z43                  38;5;239
-.z44                  38;5;239
-.z45                  38;5;239
-.z46                  38;5;239
-.z47                  38;5;239
-.z48                  38;5;239
-.z49                  38;5;239
-.z50                  38;5;239
-.z51                  38;5;239
-.z52                  38;5;239
-.z53                  38;5;239
-.z54                  38;5;239
-.z55                  38;5;239
-.z56                  38;5;239
-.z57                  38;5;239
-.z58                  38;5;239
-.z59                  38;5;239
-.z60                  38;5;239
-.z61                  38;5;239
-.z62                  38;5;239
-.z63                  38;5;239
-.z64                  38;5;239
-.z65                  38;5;239
-.z66                  38;5;239
-.z67                  38;5;239
-.z68                  38;5;239
-.z69                  38;5;239
-.z69                  38;5;239
-.z70                  38;5;239
-.z71                  38;5;239
-.z72                  38;5;239
-.z73                  38;5;239
-.z74                  38;5;239
-.z75                  38;5;239
-.z76                  38;5;239
-.z77                  38;5;239
-.z78                  38;5;239
-.z79                  38;5;239
-.z80                  38;5;239
-.z81                  38;5;239
-.z82                  38;5;239
-.z83                  38;5;239
-.z84                  38;5;239
-.z85                  38;5;239
-.z86                  38;5;239
-.z87                  38;5;239
-.z88                  38;5;239
-.z89                  38;5;239
-.z90                  38;5;239
-.z91                  38;5;239
-.z92                  38;5;239
-.z93                  38;5;239
-.z94                  38;5;239
-.z95                  38;5;239
-.z96                  38;5;239
-.z97                  38;5;239
-.z98                  38;5;239
-.z99                  38;5;239
-.z100                 38;5;239
-.z101                 38;5;239
-.z102                 38;5;239
-.z103                 38;5;239
-.z104                 38;5;239
-.z105                 38;5;239
-.z106                 38;5;239
-.z107                 38;5;239
-.z108                 38;5;239
-.z109                 38;5;239
-.z110                 38;5;239
-.z111                 38;5;239
-.z112                 38;5;239
-.z113                 38;5;239
-.z114                 38;5;239
-.z115                 38;5;239
-.z116                 38;5;239
+# segments {{{2
 # partial files
 .part                 38;5;239
+.download             38;5;239
   # }}}
 # partition images {{{2
 .iso                  38;5;124
@@ -968,7 +661,6 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3
 .pi                   38;5;7
 .plt                  38;5;7
 .pm                   38;5;7
-.rb                   38;5;7
 .rdf                  38;5;7
 .rst                  38;5;7
 .ru                   38;5;7
