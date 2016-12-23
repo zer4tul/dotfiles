@@ -33,11 +33,11 @@ function ok() {
 
 
 function running() {
-    printf "${COL_YELLOW} => ${COL_RESET}"$1": "
+    printf "${COL_YELLOW} => ${COL_RESET}$1: "
 }
 
 function action() {
-    printf "\n${COL_CYAN}[Action]:${COL_RESET}\n => $1...\n"
+    printf "\n\t${COL_CYAN}[Action]:${COL_RESET} => $1... "
 }
 
 function warn() {
@@ -49,9 +49,9 @@ function error() {
 }
 
 function require_brew() {
-    for list in $@; do
+    for list in "$@"; do
         name=$(echo "$list" | cut -d ' ' -f 1|xargs)
-        opt=$(echo "$i" | cut -d ' ' -f 2- | xargs)
+        opt=$(echo "$list" | cut -d ' ' -f 2- | xargs)
         if [ "$name" = "$opt" ]; then
             running "brew $name"
             unset opt
@@ -65,8 +65,11 @@ function require_brew() {
             if [[ $? != 0 ]]; then
                 error "failed to install $name!"
                 # exit -1
+            else
+                ok
             fi
         else
+            action "$name installed"
             ok
         fi
     done
@@ -75,26 +78,30 @@ function require_brew() {
 function require_cask() {
     for list in $@; do
         name=$(echo "$list" | cut -d ' ' -f 1|xargs)
-        opt=$(echo "$i" | cut -d ' ' -f 2- | xargs)
+        opt=$(echo "$list" | cut -d ' ' -f 2- | xargs)
         if [ "$name" = "$opt" ]; then
             running "brew cask $name"
             unset opt
         else
             running "brew cask $name, with options: $opt"
         fi
-        brew list $name > /dev/null 2>&1 | true
+        brew cask list $name > /dev/null 2>&1 | true
         if [[ ${PIPESTATUS[0]} != 0 ]]; then
             action "brew cask install $name"
             brew cask install $name $opt
             if [[ $? != 0 ]]; then
                 error "failed to install $name!"
                 # exit -1
+            else
+                ok
             fi
         else
+            action "$name installed"
             ok
         fi
     done
 }
+
 
 # ~/.macos — https://mths.be/macos
 
@@ -150,6 +157,27 @@ if [[ $? != 0 ]]; then
   brew tap caskroom/cask
 fi
 ok
+
+###############################################################################
+prompt "Installing Utilities"
+###############################################################################
+
+require_brew "vim --with-lua --with-override-system-vi"
+require_brew "coreutils"
+require_brew "stow"
+require_brew "mpv"
+require_brew "subliminal"
+require_brew "you-get"
+require_brew "the_silver_searcher"
+require_brew "proxychains-ng"
+require_brew "pass"
+
+require_cask "iterm2"
+require_cask "emacs"
+require_cask "google-chrome"
+require_cask "thunderbird"
+require_cask "gpgtools"
+require_cask "shadowsocksx-ng"
 
 ###############################################################################
 # CLI setting                                                                 #
@@ -448,8 +476,8 @@ defaults write com.apple.finder _FXSortFoldersFirst -bool true
 # defaults write com.apple.finder NewWindowTarget -string "PfDe"
 # defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/Desktop/";ok
 
-running "Show hidden files by default"
-defaults write com.apple.finder AppleShowAllFiles -bool true;ok
+# running "Show hidden files by default"
+# defaults write com.apple.finder AppleShowAllFiles -bool true;ok
 
 running "Show all filename extensions"
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true;ok
