@@ -24,11 +24,11 @@ then
 fi
 
 function prompt() {
-    printf "${COL_BLUE}[^_^]${COL_RESET} - "$1"\n"
+    printf "${COL_BLUE}[^_^]${COL_RESET} - $1\n"
 }
 
 function ok() {
-    printf "${COL_GREEN}[ok]${COL_RESET} "$1"\n"
+    printf "${COL_GREEN}[ok]${COL_RESET} $1\n"
 }
 
 
@@ -102,18 +102,24 @@ function require_cask() {
     done
 }
 
+# test's -ge ( greater or equal ), float version
+function ge() {
+    awk -v n1=$1 -v n2=$2 'BEGIN {if (n1>=n2) printf ("1"); else printf ("0");}'
+}
+
+# major versoin of MacOS, e.g. 10.12
+major_version=$(sw_vers -productVersion | awk -F '.' '{print $1 "." $2}')
 
 # ~/.macos — https://mths.be/macos
 
 
 # Ask for the administrator password upfront
-if sudo grep -q "# %wheel\tALL=(ALL) NOPASSWD: ALL" "/etc/sudoers"; then
-    prompt "I need you to enter your sudo password so I can install some things:"
-    sudo -v
+prompt "I will tweak MacOS with some sensive settings."
+prompt "Maybe I need you to enter your sudo password so I can install some things."
+sudo -v
 
-    # Keep-alive: update existing sudo time stamp until the script has finished
-    while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-fi
+# Keep-alive: update existing sudo time stamp until the script has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 
 ###############################################################################
@@ -173,11 +179,11 @@ require_brew "proxychains-ng"
 require_brew "pass"
 
 require_cask "iterm2"
-require_cask "emacs"
 require_cask "google-chrome"
 require_cask "thunderbird"
 require_cask "gpgtools"
 require_cask "shadowsocksx-ng"
+#require_cask "emacs"
 
 ###############################################################################
 # CLI setting                                                                 #
@@ -430,7 +436,7 @@ running "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false;ok
 
 running "Setting more Emacs style key binding"
-curl https://raw.githubusercontent.com/zer4tul/KeyBindings/master/install.sh | bash
+curl -s https://raw.githubusercontent.com/zer4tul/KeyBindings/master/install.sh | bash
 if [ $? -eq 0 ]; then
     ok
 fi
@@ -453,7 +459,7 @@ defaults write com.apple.screencapture type -string "png";ok
 defaults write com.apple.screencapture disable-shadow -bool true
 
 # Enable subpixel font rendering on non-Apple LCDs
-defaults write NSGlobalDomain AppleFontSmoothing -int 2
+# defaults write NSGlobalDomain AppleFontSmoothing -int 2
 
 #running "Enable HiDPI display modes ( aka. retina mode, requires restart)"
 #sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true;ok
@@ -462,8 +468,10 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 prompt "Finder Configs"
 ###############################################################################
 
-running "Keep folders on top when sorting by name (Sierra only)"
-defaults write com.apple.finder _FXSortFoldersFirst -bool true
+if [ `ge "$major_version" "10.12"` -eq 1 ]; then
+    running "Keep folders on top when sorting by name (Sierra only)"
+    defaults write com.apple.finder _FXSortFoldersFirst -bool true
+fi
 
 # running "Allow quitting via ⌘ + Q; will also hide desktop icons"
 # defaults write com.apple.finder QuitMenuItem -bool true;ok
@@ -529,8 +537,8 @@ defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true;ok
 # running "Empty Trash securely by default"
 # defaults write com.apple.finder EmptyTrashSecurely -bool true;ok
 
-running "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
-defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true;ok
+# running "Enable AirDrop over Ethernet and on unsupported Macs running Lion"
+# defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true;ok
 
 running "Show the ~/Library folder"
 chflags nohidden ~/Library;ok
@@ -656,8 +664,8 @@ defaults write com.apple.Safari SuppressSearchSuggestions -bool true;ok
 # running "Disable Safari’s thumbnail cache for History and Top Sites"
 # defaults write com.apple.Safari DebugSnapshotsUpdatePolicy -int 2;ok
 
-running "Enable Safari’s debug menu"
-defaults write com.apple.Safari IncludeInternalDebugMenu -bool true;ok
+# running "Enable Safari’s debug menu"
+# defaults write com.apple.Safari IncludeInternalDebugMenu -bool true;ok
 
 running "Make Safari’s search banners default to Contains instead of Starts With"
 defaults write com.apple.Safari FindOnPageMatchesWordStartsOnly -bool false;ok
@@ -808,8 +816,8 @@ defaults write com.apple.SoftwareUpdate AutomaticDownload -int 1;ok
 running "Install System data files & security updates"
 defaults write com.apple.SoftwareUpdate CriticalUpdateInstall -int 1;ok
 
-running "Automatically download apps purchased on other Macs"
-defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1;ok
+# running "Automatically download apps purchased on other Macs"
+# defaults write com.apple.SoftwareUpdate ConfigDataInstall -int 1;ok
 
 running "Turn on app auto-update"
 defaults write com.apple.commerce AutoUpdate -bool true;ok
