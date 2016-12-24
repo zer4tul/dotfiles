@@ -132,7 +132,7 @@ export LC_CTYPE="zh_CN.UTF-8"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git gitextra pass autojump zsh-syntax-highlighting virtualenv)
+plugins=(tmux git gitextra pass autojump zsh-syntax-highlighting virtualenv)
 
 # for virtualenv
 if [ -x /usr/local/bin/virtualenvwrapper.sh ]; then
