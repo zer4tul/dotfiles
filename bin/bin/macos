@@ -177,6 +177,7 @@ require_brew "you-get"
 require_brew "the_silver_searcher"
 require_brew "proxychains-ng"
 require_brew "pass"
+require_brew "cmake"
 
 require_cask "iterm2"
 require_cask "google-chrome"
