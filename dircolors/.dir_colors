@@ -49,7 +49,7 @@ LINK                  38;5;5              # symbolic link.  (If your set this
 #LINK                 target                # to 'target' instead of a numerical
                                             # value, the color is as for the
                                             # file pointed to.)
-MULTIHARDLINK         38;5;7;4              # regular file with more than one
+MULTIHARDLINK         38;5;15;4              # regular file with more than one
                                             # link
 FIFO                  38;5;126              # pipe
 SOCK                  38;5;126              # socket
