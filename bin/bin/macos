@@ -417,6 +417,11 @@ defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1;ok
 running "Increase sound quality for Bluetooth headphones/headsets"
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40;ok
 
+
+running "Set a blazingly fast keyboard repeat rate"
+defaults write -g KeyRepeat -int 1
+defaults write -g InitialKeyRepeat -int 10
+
 # running "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 # defaults write NSGlobalDomain AppleKeyboardUIMode -int 3;ok
 
@@ -432,7 +437,6 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 # running "Set a blazingly fast keyboard repeat rate"
 # defaults write NSGlobalDomain KeyRepeat -int 1
 # defaults write NSGlobalDomain InitialKeyRepeat -int 10;ok
-
 # running "Set language and text formats (english/US)"
 # defaults write NSGlobalDomain AppleLanguages -array "(en-CN, zh-Hans-CN, zh-Hans-CN, ja-CN, de)"
 # defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
