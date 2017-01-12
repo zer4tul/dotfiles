@@ -76,7 +76,7 @@ function require_brew() {
 }
 
 function require_cask() {
-    for list in $@; do
+    for list in "$@"; do
         name=$(echo "$list" | cut -d ' ' -f 1|xargs)
         opt=$(echo "$list" | cut -d ' ' -f 2- | xargs)
         if [ "$name" = "$opt" ]; then
@@ -179,6 +179,8 @@ require_brew "proxychains-ng"
 require_brew "pass"
 require_brew "cmake"
 
+require_cask "shadowsocksx-ng"
+require_cask "bettertouchtool"
 require_cask "iterm2"
 require_cask "appcleaner"
 require_cask "the-unarchiver"
@@ -189,18 +191,15 @@ require_cask "hyperswitch"
 require_cask "google-chrome"
 require_cask "thunderbird"
 require_cask "gpgtools"
-require_cask "shadowsocksx-ng"
 #require_cask "emacs"
 
 ###############################################################################
 # CLI setting                                                                 #
 ###############################################################################
-CURRENTSHELL=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
+CURRENTSHELL=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
 if [[ "$CURRENTSHELL" != "/bin/zsh" ]]; then
-  prompt "setting zsh (/bin/zsh) as your shell (password required)"
-  # sudo bash -c 'echo "/usr/local/bin/zsh" >> /etc/shells'
-  # chsh -s /usr/local/bin/zsh
-  sudo dscl . -change /Users/$USER UserShell $SHELL /usr/local/bin/zsh > /dev/null 2>&1
+  prompt "setting zsh (/bin/zsh) as your shell (maybe password required)"
+  sudo dscl . -change /Users/$USER UserShell $SHELL /bin/zsh > /dev/null 2>&1
   ok
 fi
 
@@ -225,16 +224,16 @@ defaults write com.apple.universalaccess reduceTransparency -bool true
 
 # Menu bar: hide the Time Machine, Volume, and User icons
 for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-	defaults write "${domain}" dontAutoLoad -array \
-		"/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-		"/System/Library/CoreServices/Menu Extras/Volume.menu" \
-		"/System/Library/CoreServices/Menu Extras/User.menu"
+    defaults write "${domain}" dontAutoLoad -array \
+        "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
+        "/System/Library/CoreServices/Menu Extras/Volume.menu" \
+        "/System/Library/CoreServices/Menu Extras/User.menu"
 done
 defaults write com.apple.systemuiserver menuExtras -array \
-	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-	"/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-	"/System/Library/CoreServices/Menu Extras/Battery.menu" \
-	"/System/Library/CoreServices/Menu Extras/Clock.menu"
+    "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
+    "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
+    "/System/Library/CoreServices/Menu Extras/Battery.menu" \
+    "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 running "Set highlight color to green (wasabi color)"
 #defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
@@ -420,7 +419,7 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 
 running "Set a blazingly fast keyboard repeat rate"
 defaults write -g KeyRepeat -int 1
-defaults write -g InitialKeyRepeat -int 10
+defaults write -g InitialKeyRepeat -int 10;ok
 
 # running "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 # defaults write NSGlobalDomain AppleKeyboardUIMode -int 3;ok
@@ -434,9 +433,6 @@ defaults write -g InitialKeyRepeat -int 10
 # running "Disable press-and-hold for keys in favor of key repeat"
 # defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;ok
 # 
-# running "Set a blazingly fast keyboard repeat rate"
-# defaults write NSGlobalDomain KeyRepeat -int 1
-# defaults write NSGlobalDomain InitialKeyRepeat -int 10;ok
 # running "Set language and text formats (english/US)"
 # defaults write NSGlobalDomain AppleLanguages -array "(en-CN, zh-Hans-CN, zh-Hans-CN, ja-CN, de)"
 # defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
