@@ -24,28 +24,28 @@ then
 fi
 
 function prompt() {
-    printf "${COL_BLUE}[^_^]${COL_RESET} - $1\n"
+    printf "${COL_BLUE}[^_^]${COL_RESET} - %s\n" "$1"
 }
 
 function ok() {
-    printf "${COL_GREEN}[ok]${COL_RESET} $1\n"
+    printf "${COL_GREEN}[ok]${COL_RESET} %s\n" "$1"
 }
 
 
 function running() {
-    printf "${COL_YELLOW} => ${COL_RESET}$1: "
+    printf "${COL_YELLOW} => ${COL_RESET}%s: " "$1"
 }
 
 function action() {
-    printf "\n\t${COL_CYAN}[Action]:${COL_RESET} => $1... "
+    printf "\n\t${COL_CYAN}[Action]:${COL_RESET} => %s... " "$1"
 }
 
 function warn() {
-    printf "${COL_YELLOW}[Warning]: $1\n${COL_RESET}"
+    printf "${COL_YELLOW}[Warning]: %s\n${COL_RESET}" "$1"
 }
 
 function error() {
-    printf "${COL_RED}[Error]:$1\n${COL_RESET}"
+    printf "${COL_RED}[Error]: %s\n${COL_RESET}" "$1"
 }
 
 function require_brew() {
@@ -185,12 +185,15 @@ require_cask "iterm2"
 require_cask "appcleaner"
 require_cask "the-unarchiver"
 #require_cask "keka"
-require_cask "flycut"
-require_cask "go2shell"
+#require_cask "flycut"
+#require_cask "go2shell"
 require_cask "hyperswitch"
 require_cask "google-chrome"
 require_cask "thunderbird"
 require_cask "gpgtools"
+#require_cask "baiduhi"
+#require_cask "baidunetdisk"
+#require_cask "neteasemusic"
 #require_cask "emacs"
 
 ###############################################################################
