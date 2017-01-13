@@ -199,11 +199,21 @@ require_cask "gpgtools"
 ###############################################################################
 # CLI setting                                                                 #
 ###############################################################################
+
 CURRENTSHELL=$(dscl . -read /Users/"$USER" UserShell | awk '{print $2}')
 if [[ "$CURRENTSHELL" != "/bin/zsh" ]]; then
   prompt "setting zsh (/bin/zsh) as your shell (maybe password required)"
   sudo dscl . -change /Users/$USER UserShell $SHELL /bin/zsh > /dev/null 2>&1
   ok
+fi
+
+if [ ! -n "$ZSH" ]; then
+    ZSH=~/.oh-my-zsh
+fi
+
+if [ ! -d "$ZSH" ]; then
+    running "install oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && ok
 fi
 
 ###############################################################################
@@ -421,7 +431,7 @@ defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int
 
 
 running "Set a blazingly fast keyboard repeat rate"
-defaults write -g KeyRepeat -int 1
+defaults write -g KeyRepeat -int 2
 defaults write -g InitialKeyRepeat -int 10;ok
 
 # running "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
