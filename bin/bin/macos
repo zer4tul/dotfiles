@@ -430,9 +430,9 @@ running "Increase sound quality for Bluetooth headphones/headsets"
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40;ok
 
 
-running "Set a blazingly fast keyboard repeat rate"
+running "Set a fast keyboard repeat rate"
 defaults write -g KeyRepeat -int 2
-defaults write -g InitialKeyRepeat -int 10;ok
+defaults write -g InitialKeyRepeat -int 35;ok
 
 # running "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 # defaults write NSGlobalDomain AppleKeyboardUIMode -int 3;ok
