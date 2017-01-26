@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# based on Mathias' macOS defaults script https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+
 # color macros
 if [ -t 1 ]
 then
@@ -274,6 +276,9 @@ ok
 
 running "Save to disk (not to iCloud) by default"
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false;ok
+
+running "Disable macOS automatically optimize storage, you can enable it at \"iCloud > iCloud Drive > Options\" and check the \"Optimize Mac Storage\" checkbox"
+defaults write com.apple.bird optimize-storage -int 0;ok
 
 running "Automatically quit printer app once the print jobs complete"
 defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true;ok
