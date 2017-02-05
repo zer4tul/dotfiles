@@ -198,6 +198,9 @@ require_cask "gpgtools"
 #require_cask "neteasemusic"
 #require_cask "emacs"
 
+# quicklook plugins
+require_cask "qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package quicklookase qlvideo"
+
 ###############################################################################
 # CLI setting                                                                 #
 ###############################################################################
