@@ -106,5 +106,7 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+# mpv watch_later directory
+mpv/.config/mpv/watch_later
 
 /.project
