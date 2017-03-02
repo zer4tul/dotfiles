@@ -31,12 +31,19 @@ if [ "`uname`" = "Darwin" ]; then
         PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
         MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     fi
+
+    # for gem user installation
+    if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
+        PATH="$PATH:$HOME/.gem/ruby/2.0.0/bin"
+    fi
 fi
 
 
 # Golang
 GOPATH=~/go
-PATH="$PATH:$GOPATH/bin"
+if [ -d "$GOPATH/bin" ]; then
+    PATH="$PATH:$GOPATH/bin"
+fi
 
 # Python
 PYTHONPATH="$PYTHONPATH:."
