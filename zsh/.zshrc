@@ -1,3 +1,4 @@
+# Oh-my-zsh settings {{{1
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -14,7 +15,7 @@ else
     ZSH_THEME="simple"
 fi
 
-# Icon settings
+# Icon settings {{{2
 #POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U2BC8'                  # ⯈
 #POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\U2BC7'                 # ⯇
 POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U276F'                   # ❯
@@ -108,15 +109,7 @@ POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="232"
 # virtualenv colors
 POWERLEVEL9K_VIRTUALENV_BACKGROUND="235"
 POWERLEVEL9K_VIRTUALENV_FOREGROUND="106"
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vi="vim"
-
-# Locale settings
-export LANG="zh_CN.UTF-8"
-export LC_CTYPE="zh_CN.UTF-8"
+# }}}
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -133,26 +126,54 @@ export LC_CTYPE="zh_CN.UTF-8"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
 
+# Plugins {{{2
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(tmux git gitextra pass autojump zsh-syntax-highlighting virtualenv)
 
-# for virtualenv
+# Plugins for MacOS only {{{3
+if [ "`uname`" = "Darwin" ]
+then
+    # Add MacOS spicified plugin into plugin list
+    plugins=($plugins osx)
+fi
+# }}}
+# }}}
+
+source $ZSH/oh-my-zsh.sh
+# }}}
+
+# User settings {{{1
+
+# aliases {{{2
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias vi="vim"
+# }}}
+
+# Locale settings {{{2
+export LANG="zh_CN.UTF-8"
+export LC_CTYPE="zh_CN.UTF-8"
+# }}}
+
+
+# virtualenv {{{2
 if [ -x /usr/local/bin/virtualenvwrapper.sh ]; then
     source /usr/local/bin/virtualenvwrapper.sh
     export WORKON_HOME=~/.virtualenv
 fi
+# }}}
 
-# Set Editor and Visual
+# Set Editor and Visual {{{2
 export EDITOR="vim"
 #export VISUAL="gvim"
+# }}}
 
-source $ZSH/oh-my-zsh.sh
 
 #export TERM=xterm-256color
 
-# 定义颜色 {{{
+# Colors {{{2
 if [[ ("$TERM" = *256color || "$TERM" = screen*) && -f $HOME/.dir_colors ]]; then
     #use prefefined colors
     eval $(dircolors -b $HOME/.dir_colors)
@@ -164,48 +185,17 @@ else
 fi
 #}}}
 
-#force rehash when command not found
+#force rehash when command not found {{{2
 #  http://zshwiki.org/home/examples/compsys/general
 _force_rehash() {
     (( CURRENT == 1 )) && rehash
     return 1    # Because we did not really complete anything
 }
+# }}}
 
-# Enhancement for MacOS only
-if [ "`uname`" = "Darwin" ]
-then
-    # Add MacOS spicified plugin into plugin list
-    plugins=($plugins brew osx)
-    # Enhance completion for iTerm2
-    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
-    alias run='open -a'
-
-    # autojump settings
-    [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
-
-    # homebrew settings
-    # Set architecture flags
-    export ARCHFLAGS="-arch x86_64"
-
-    # use ls from GNU Coreutils ( if exists ) instead of BSD ls.
-    GLS=$(which -s gls)
-    if [ $? -eq 0 ]; then
-        alias ls='ls --color=auto'
-    fi
-
-fi
 
 # {{{ colorize commands
 #show 256 color tab
-256tab() {
-    for k in `seq 0 1`;do 
-        for j in `seq $((0+k*18)) 36 $((196+k*18))`;do 
-            for i in `seq $j $((j+17))`; do 
-                printf "\e[01;$1;38;5;%sm%4s" $i $i;
-            done;echo;
-        done;
-    done
-}
 
 TOKENS_FOLLOWED_BY_COMMANDS=('|' '||' ';' '&' '&&' 'sudo' 'do' 'time' 'strace')
 
@@ -242,7 +232,7 @@ zle -N self-insert check-cmd-self-insert
 zle -N backward-delete-char check-cmd-backward-delete-char
 # }}}
 
-# support colors in less
+# support colors in less {{{2
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
 export LESS_TERMCAP_me=$'\E[0m'
@@ -250,8 +240,9 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
+# }}}
 
-# Util functions
+# Util functions {{{2
 hex_gbk(){
     python -c "from binascii import hexlify; print('\t'.join([\"$1\", hexlify(\"$1\".decode('utf-8').encode('gbk'))]))"
 }
@@ -260,7 +251,40 @@ hex_utf8(){
     python -c "from binascii import hexlify; print('\t'.join([\"$1\", hexlify(\"$1\")]))"
 }
 
-export NVM_DIR="$HOME/.nvm"
-if [ -s "$NVM_DIR/nvm.sh" ]; then
-    . "$NVM_DIR/nvm.sh"  # This loads nvm
+256tab() {
+    for k in `seq 0 1`;do 
+        for j in `seq $((0+k*18)) 36 $((196+k*18))`;do 
+            for i in `seq $j $((j+17))`; do 
+                printf "\e[01;$1;38;5;%sm%4s" $i $i;
+            done;echo;
+        done;
+    done
+}
+# }}}
+
+# Enhancement for MacOS only {{{2
+if [ "`uname`" = "Darwin" ]
+then
+    # Enhance completion for iTerm2
+    compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
+    alias run='open -a'
+
+    # autojump settings
+    [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+    # homebrew settings
+    # Set architecture flags
+    export ARCHFLAGS="-arch x86_64"
+
+    # use ls from GNU Coreutils ( if exists ) instead of BSD ls.
+    GLS=$(which -s gls)
+    if [ $? -eq 0 ]; then
+        alias ls='ls --color=auto'
+    fi
+
 fi
+# }}}
+
+# }}}
+
+# vim: ft=zsh:fdm=marker

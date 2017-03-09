@@ -32,12 +32,18 @@ if [ "`uname`" = "Darwin" ]; then
         MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     fi
 
-    # for gem user installation
-    if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
-        PATH="$PATH:$HOME/.gem/ruby/2.0.0/bin"
-    fi
 fi
 
+# for gem user installation
+if [ -d "$HOME/.gem/ruby/2.0.0/bin" ]; then
+    PATH="$PATH:$HOME/.gem/ruby/2.0.0/bin"
+fi
+
+# nodejs
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"  # This loads nvm
+fi
 
 # Golang
 GOPATH=~/go
