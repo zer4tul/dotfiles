@@ -54,6 +54,10 @@ fi
 # Python
 PYTHONPATH="$PYTHONPATH:."
 
+# rust
+if [ -f "$HOME/.cargo/bin" ]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 export PATH
 export GOPATH
@@ -64,3 +68,4 @@ export MANPATH
 if [ -f $HOME/.profile.local ]; then
     source $HOME/.profile.local
 fi
+
