@@ -204,6 +204,16 @@ require_cask "xmind"
 require_cask "qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package quicklookase qlvideo"
 
 ###############################################################################
+prompt "Installing Fonts"
+###############################################################################
+output=$(brew tap | grep fonts)
+if [[ $? != 0 ]]; then
+  action "installing brew-font"
+  brew tap caskroom/fonts
+fi
+require_cask "font-fira-code font-iosevka"
+
+###############################################################################
 # CLI setting                                                                 #
 ###############################################################################
 
@@ -683,6 +693,9 @@ defaults write com.apple.Safari ShowFavoritesBar -bool false;ok
 
 running "Hide Safari’s sidebar in Top Sites"
 defaults write com.apple.Safari ShowSidebarInTopSites -bool false;ok
+
+running "Make Safari show URL when hover over a link"
+defaults write com.apple.Safari ShowOverlayStatusBar -bool true; ok
 
 running "Prevent Safari from opening ‘safe’ files automatically after downloading"
 defaults write com.apple.Safari AutoOpenSafeDownloads -bool false;ok
