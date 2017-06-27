@@ -46,9 +46,9 @@ fi
 #POWERLEVEL9K_NODE_ICON=$'\U2B22'                                # ⬢
 #POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=$'\U256D'$'\U2500'   # ╭─
 #POWERLEVEL9K_MULTILINE_SECOND_PROMPT_PREFIX=$'\U2570'$'\U2500 ' # ╰─
-POWERLEVEL9K_APPLE_ICON=$'\uF8FF'                               # 
-POWERLEVEL9K_FREEBSD_ICON=$'\U0001F608 '                        # 😈
-POWERLEVEL9K_LINUX_ICON=$'\U0001F427'                           # 🐧
+POWERLEVEL9K_APPLE_ICON=$'MacOS'                               # 
+#POWERLEVEL9K_FREEBSD_ICON=$'\U0001F608 '                        # 😈
+#POWERLEVEL9K_LINUX_ICON=$'\U0001F427'                           # 🐧
 #POWERLEVEL9K_SUNOS_ICON='Sun'
 #POWERLEVEL9K_HOME_ICON=$'\U0001F3E0'                            # 🏠
 #POWERLEVEL9K_HOME_SUB_ICON=$'\U0001F4C2'                        # 📂
