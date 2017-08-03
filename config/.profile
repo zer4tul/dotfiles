@@ -32,6 +32,13 @@ if [ "`uname`" = "Darwin" ]; then
         MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     fi
 
+    # for pip install --user
+    if [ -d "$HOME/Library/Python/" ]; then
+        for i in "$HOME"/Library/Python/*; do
+            PATH="$i/bin/:$PATH"
+        done
+    fi
+
 fi
 
 # for gem user installation
