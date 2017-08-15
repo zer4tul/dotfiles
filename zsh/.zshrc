@@ -268,7 +268,18 @@ then
     # Enhance completion for iTerm2
     compctl -f -x 'p[2]' -s "`/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g'`" -- open
     alias run='open -a'
-    alias brew_fresh="brew update && brew upgrade ; brew cleanup; for i in \$(brew cask outdated); do brew cask reinstall \$(echo $i | awk '{print $1}'); done; brew cask cleanup"
+
+    brew_fresh()
+    {
+        brew update && brew upgrade
+        brew cleanup
+        for i in $(brew cask outdated)
+        do
+            echo "reinstall $i"
+            brew cask reinstall $(echo $i | awk '{print $1}')
+        done
+        brew cask cleanup
+    }
 
     # autojump settings
     [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
