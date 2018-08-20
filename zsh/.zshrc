@@ -272,13 +272,8 @@ then
     brew_fresh()
     {
         brew update && brew upgrade
+        brew cask upgrade
         brew cleanup
-        for i in $(brew cask outdated)
-        do
-            echo "reinstall $i"
-            brew cask reinstall $(echo $i | awk '{print $1}')
-        done
-        brew cask cleanup
     }
 
     # autojump settings

@@ -32,6 +32,14 @@ if [ "`uname`" = "Darwin" ]; then
         MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"
     fi
 
+    # for anaconda installed by Homebrew
+    if [ -d "/usr/local/anaconda/" ]; then
+        PATH="/usr/local/anaconda/bin/:$PATH"
+    fi
+    if [ -d "/usr/local/anaconda3/" ]; then
+        PATH="/usr/local/anaconda3/bin/:$PATH"
+    fi
+
     # for pip install --user
     if [ -d "$HOME/Library/Python/" ]; then
         for i in "$HOME"/Library/Python/*; do
