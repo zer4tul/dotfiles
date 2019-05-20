@@ -147,9 +147,17 @@ source $ZSH/oh-my-zsh.sh
 # User settings {{{1
 
 # aliases {{{2
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vi="vim"
+# use ls from GNU Coreutils ( if exists ) instead of BSD ls.
+if [ -f "$(which exa)" ]; then
+    alias ls='exa'
+elif [ -f "$(which gls)" -a "`uname`" = "Darwin" ]; then
+    alias ls='gls --color=auto'
+fi
+
+if [ -f "$(which bat)" ]; then
+    alias cat='bat'
+fi
 # }}}
 
 # Locale settings {{{2
@@ -283,11 +291,6 @@ then
     # Set architecture flags
     export ARCHFLAGS="-arch x86_64"
 
-    # use ls from GNU Coreutils ( if exists ) instead of BSD ls.
-    GLS=$(which -s gls)
-    if [ $? -eq 0 ]; then
-        alias ls='ls --color=auto'
-    fi
 
 fi
 # }}}
