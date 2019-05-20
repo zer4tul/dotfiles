@@ -125,12 +125,13 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND="106"
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 # COMPLETION_WAITING_DOTS="true"
+#
 
 # Plugins {{{2
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(tmux git gitextra pass autojump zsh-syntax-highlighting virtualenv)
+plugins=(tmux git gitextra pass autojump zsh-syntax-highlighting)
 
 # Plugins for MacOS only {{{3
 if [ "`uname`" = "Darwin" ]
@@ -296,5 +297,8 @@ fi
 # }}}
 
 # }}}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 
 # vim: ft=zsh:fdm=marker
