@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 
+BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+# color macros
+if [ -t 1 ]
+then
+    COL_RESET="$( printf "\e[0m" )"
+    COL_BLACK="$( printf "\e[30;1m" )"
+    COL_RED="$( printf "\e[31;1m" )"
+    COL_GREEN="$( printf "\e[32;1m" )"
+    COL_YELLOW="$( printf "\e[33;1m" )"
+    COL_BLUE="$( printf "\e[34;1m" )"
+    COL_PURPLE="$( printf "\e[35;1m" )"
+    COL_CYAN="$( printf "\e[36;1m" )"
+    COL_WHITE="$( printf "\e[37;1m" )"
+
+    COL_BG_BLACK="$( printf "\e[40m" )"
+    COL_BG_RED="$( printf "\e[41m" )"
+    COL_BG_GREEN="$( printf "\e[42m" )"
+    COL_BG_YELLOW="$( printf "\e[43m" )"
+    COL_BG_BLUE="$( printf "\e[44m" )"
+    COL_BG_PURPLE="$( printf "\e[45m" )"
+    COL_BG_CYAN="$( printf "\e[46m" )"
+    COL_BG_WHITE="$( printf "\e[47m" )"
+fi
+
 DEFAULT_PKG="stow zsh tmux"
 LINUX_ONLY_PKG="git"
 MACOS_ONLY_PKG="macos"
@@ -8,27 +33,36 @@ PKG_LIST=""
 
 clear;
 
-test_stow() {
+function test_stow() {
     stow_exec=$(which stow)
-    if [ $? -eq 0 ]; then
-        echo "ERROR: Please install GNU stow with your package manager first."
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Please install ${COL_RED}GNU stow${COL_RESET} with your package manager first."
         exit 1
     fi
 }
 
-default() {
+
+function test_git() {
+    git_exec=$(which git)
+    if [ $? -ne 0 ]; then
+        echo "ERROR: Please install ${COL_RED}git${COL_RESET} with your package manager first."
+        exit 1
+    fi
+}
+
+function list_packages() {
+    echo $(find $BASE_DIR -depth 1 -type d | grep -v '.git' | awk -F / '{print $NF}')
+}
+
+function stow_dotfiles() {
     # stow
     clear
-    echo "2. stow dotfile folders"
-    $stow_exec emacs git profile sqlite zshrc
-
-    # zsh
-    echo "3. set zsh as default shell"
-    chsh -s /bin/zsh
+    echo "stow dotfile folders"
+    $stow_exec -v $(list_packages)
 }
 
 
-tweak_macos() {
+function tweak_macos() {
     QUESTION="Tweak MacOS settings?(Y/n)"
     echo -e $QUESTION
 
@@ -54,10 +88,11 @@ tweak_macos() {
     done
 }
 
+test_stow
+test_git
+stow_dotfiles
+
 OS=$(uname)
 if [ "$OS" = "Darwin" ]; then
-    PKG_LIST="$DEFAULT_PKG $MACOS_ONLY_PKG"
     tweak_macos
-elif [ "$OS" = "Linux" ]; then
-    PKG_LIST="$DEFAULT_PKG $LINUX_ONLY_PKG"
 fi
