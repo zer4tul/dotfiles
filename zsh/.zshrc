@@ -10,7 +10,7 @@ ZSH_CUSTOM=$HOME/.zsh
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
 if [[ ("$TERM" = *256color || "$TERM" = screen*) ]]; then
-    ZSH_THEME="powerlevel9k/powerlevel9k"
+    ZSH_THEME="powerlevel10k/powerlevel10k"
 else
     ZSH_THEME="simple"
 fi
@@ -73,12 +73,14 @@ POWERLEVEL9K_VCS_GIT_ICON=$'\U24D6'                             # ⓖ
 POWERLEVEL9K_VCS_HG_ICON=$'\U24D7'                              # ⓗ
 POWERLEVEL9K_VCS_SVN_ICON=$'\U24E2'                             # ⓢ
 #POWERLEVEL9K_RUST_ICON=''
-POWERLEVEL9K_PYTHON_ICON=$'\U1F40D'                             # 🐍
+#POWERLEVEL9K_PYTHON_ICON=$'\U1F40D'                             # 🐍
+POWERLEVEL9K_PYTHON_ICON=''                             
 
 
 # theme specific settings
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(virtualenv vcs status)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(vcs anaconda status)
+POWERLEVEL9K_ANACONDA_SHOW_PYTHON_VERSION=false
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S %d/%m/%Y}"
 POWERLEVEL9K_NODE_VERSION_BACKGROUND='022'
 POWERLEVEL9K_OS_ICON_BACKGROUND="253"
@@ -131,7 +133,7 @@ POWERLEVEL9K_VIRTUALENV_FOREGROUND="106"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(tmux git gitextra pass autojump zsh-syntax-highlighting)
+plugins=(tmux git git-extras pass autojump)
 
 # Plugins for MacOS only {{{3
 if [ "`uname`" = "Darwin" ]
