@@ -9,11 +9,17 @@ ZSH_CUSTOM=$HOME/.zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-if [[ ("$TERM" = *256color || "$TERM" = screen*) ]]; then
-    ZSH_THEME="powerlevel10k/powerlevel10k"
-else
-    ZSH_THEME="simple"
-fi
+function set_theme(){
+  if [[ ("$TERM" = *256color || "$TERM" = screen*) && -d "$ZSH_CUSTOM/themes/$(basename $1)" ]]; then
+      ZSH_THEME="$1"
+  elif [[ -f "$ZSH/themes/$1.zsh-theme" ]]; then
+      ZSH_THEME="$1"
+  else
+      ZSH_THEME="simple"
+  fi
+}
+set_theme "powerlevel10k/powerlevel10k"
+
 
 ## Icon settings {{{2
 ##POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\U2BC8'                  # ⯈
