@@ -17,7 +17,7 @@
   (when (probe-file quicklisp-init)
     (load quicklisp-init)))
 
-;(setf (ql-config:config-value "proxy-url") "http://127.0.0.1:1087")
+(setf (ql-config:config-value "proxy-url") "http://127.0.0.1:8001")
 
 
 ;; Check for --no-linedit command-line option.
