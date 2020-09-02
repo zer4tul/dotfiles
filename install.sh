@@ -51,7 +51,7 @@ function test_git() {
 }
 
 function list_packages() {
-    echo $(find $BASE_DIR -depth 1 -type d | grep -v '.git' | awk -F / '{print $NF}')
+    echo $(find $BASE_DIR -maxdepth 1 -mindepth 1 -type d | grep -v '.git' | awk -F / '{print $NF}')
 }
 
 function stow_dotfiles() {
@@ -59,6 +59,11 @@ function stow_dotfiles() {
     clear
     echo "stow dotfile folders"
     $stow_exec -v $(list_packages)
+}
+
+function install_shell_global_config() {
+    echo 'source "$HOME"/.profile.global' >> "$HOME"/.profile
+    echo 'source "$HOME"/.zshrc.global' >> "$HOME"/.zshrc
 }
 
 
@@ -90,7 +95,7 @@ function tweak_macos() {
 
 test_stow
 test_git
-stow_dotfiles
+stow_dotfiles && install_shell_global_config
 
 OS=$(uname)
 if [ "$OS" = "Darwin" ]; then
