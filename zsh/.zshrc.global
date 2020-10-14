@@ -288,8 +288,7 @@ then
 
     brew_fresh()
     {
-        brew update && brew upgrade
-        brew cask upgrade
+        brew update && brew upgrade --greedy
         brew cleanup
     }
 
