@@ -167,6 +167,11 @@ fi
 if [ -f "$(which bat)" ]; then
     alias cat='bat'
 fi
+
+
+if [ -f "$(which duf)" ]; then
+    alias df='duf'
+fi
 # }}}
 
 # Locale settings {{{2
