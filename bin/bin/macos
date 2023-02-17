@@ -162,7 +162,7 @@ running "checking brew-cask install"
 output=$(brew tap | grep cask)
 if [[ $? != 0 ]]; then
   action "installing brew-cask"
-  brew tap caskroom/cask
+  brew tap homebrew/cask
 fi
 ok
 
@@ -170,20 +170,16 @@ ok
 prompt "Installing Utilities"
 ###############################################################################
 
-require_brew "vim --with-lua --with-override-system-vi"
+require_brew "vim --with-override-system-vi"
 require_brew "coreutils"
 require_brew "stow"
-require_brew "mpv"
 require_brew "you-get"
 require_brew "the_silver_searcher"
-require_brew "proxychains-ng"
-require_brew "pass"
 require_brew "cmake"
 require_brew "fzf"
 require_brew "bat"
 require_brew "exa"
 
-require_cask "shadowsocksx-ng"
 require_cask "iterm2"
 require_cask "appcleaner"
 require_cask "the-unarchiver"
@@ -199,10 +195,10 @@ require_cask "fliqlo"
 require_cask "xmind-zen"
 require_cask "qq"
 require_cask "wechat"
-require_cask "baiduhi"
 require_cask "baidunetdisk"
 require_cask "neteasemusic"
 require_cask "setapp"
+require_cask "iina"
 
 # quicklook plugins
 require_cask "qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package quicklookase qlvideo"
@@ -213,9 +209,9 @@ prompt "Installing Fonts"
 output=$(brew tap | grep fonts)
 if [[ $? != 0 ]]; then
   action "installing brew-font"
-  brew tap caskroom/fonts
+  brew tap homebrew/cask-fonts
 fi
-require_cask "font-fira-code font-iosevka"
+require_cask "font-fira-code font-iosevka font-jetbrains-mono"
 
 ###############################################################################
 # CLI setting                                                                 #
