@@ -2,6 +2,10 @@
 
 # based on Mathias' macOS defaults script https://github.com/mathiasbynens/dotfiles/blob/master/.macos
 
+# Dotfiles dir Path
+SCRIPT=$(if [ -L "$0" ]; then readlink -f "$0"; else echo "$0";fi)
+DOTFILES_DIR="$(cd -- "$(dirname "$SCRIPT")/../.." >/dev/null 2>&1; pwd -P )"
+
 # color macros
 if [ -t 1 ]
 then
@@ -50,7 +54,7 @@ function error() {
     printf "${COL_RED}[Error]: %s\n${COL_RESET}" "$1"
 }
 
-function require_brew() {
+function brew_install() {
     for list in "$@"; do
         name=$(echo "$list" | cut -d ' ' -f 1|xargs)
         opt=$(echo "$list" | cut -d ' ' -f 2- | xargs)
@@ -64,33 +68,6 @@ function require_brew() {
         if [[ ${PIPESTATUS[0]} != 0 ]]; then
             action "brew install $name"
             brew install $name $opt
-            if [[ $? != 0 ]]; then
-                error "failed to install $name!"
-                # exit -1
-            else
-                ok
-            fi
-        else
-            action "$name installed"
-            ok
-        fi
-    done
-}
-
-function require_cask() {
-    for list in "$@"; do
-        name=$(echo "$list" | cut -d ' ' -f 1|xargs)
-        opt=$(echo "$list" | cut -d ' ' -f 2- | xargs)
-        if [ "$name" = "$opt" ]; then
-            running "brew cask $name"
-            unset opt
-        else
-            running "brew cask $name, with options: $opt"
-        fi
-        brew cask list $name > /dev/null 2>&1 | true
-        if [[ ${PIPESTATUS[0]} != 0 ]]; then
-            action "brew cask install $name"
-            brew cask install $name $opt
             if [[ $? != 0 ]]; then
                 error "failed to install $name!"
                 # exit -1
@@ -169,39 +146,17 @@ ok
 ###############################################################################
 prompt "Installing Utilities"
 ###############################################################################
+while IFS= read -r line
+do
+  brew_install "$line"
+done < <(grep -v '^ *#' < "$DOTFILES_DIR/macos/brew_list")
 
-require_brew "vim --with-override-system-vi"
-require_brew "coreutils"
-require_brew "stow"
-require_brew "you-get"
-require_brew "the_silver_searcher"
-require_brew "cmake"
-require_brew "fzf"
-require_brew "bat"
-require_brew "exa"
-
-require_cask "iterm2"
-require_cask "appcleaner"
-require_cask "the-unarchiver"
-require_cask "visual-studio-code"
-#require_cask "keka"
-#require_cask "flycut"
-#require_cask "go2shell"
-require_cask "hyperswitch"
-require_cask "google-chrome"
-require_cask "thunderbird"
-require_cask "gpgtools"
-require_cask "fliqlo"
-require_cask "xmind-zen"
-require_cask "qq"
-require_cask "wechat"
-require_cask "baidunetdisk"
-require_cask "neteasemusic"
-require_cask "setapp"
-require_cask "iina"
 
 # quicklook plugins
-require_cask "qlcolorcode qlstephen qlmarkdown quicklook-json qlprettypatch quicklook-csv betterzipql qlimagesize webpquicklook suspicious-package quicklookase qlvideo"
+while IFS= read -r line
+do
+  brew_install "$line"
+done < <(grep -v '^ *#' < "$DOTFILES_DIR/macos/quicklook_plugins")
 
 ###############################################################################
 prompt "Installing Fonts"
@@ -211,7 +166,11 @@ if [[ $? != 0 ]]; then
   action "installing brew-font"
   brew tap homebrew/cask-fonts
 fi
-require_cask "font-fira-code font-iosevka font-jetbrains-mono"
+
+while IFS= read -r line
+do
+  brew_install "$line"
+done < <(grep -v '^ *#' < "$DOTFILES_DIR/macos/font_list")
 
 ###############################################################################
 # CLI setting                                                                 #
@@ -233,37 +192,39 @@ if [ ! -d "$ZSH" ]; then
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && ok
 fi
 
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+ok
+
+# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
+
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-running "closing any system preferences to prevent issues with automated changes"
-osascript -e 'tell application "System Preferences" to quit'
-ok
+running "Set standby delay to 24 hours (default is 1 hour)"
+sudo pmset -a standbydelay 86400;ok
 
-# Set standby delay to 24 hours (default is 1 hour)
-sudo pmset -a standbydelay 86400
-
-# Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
+running "Disable the sound effects on boot"
+sudo nvram SystemAudioVolume=" ";ok
 
 # Disable transparency in the menu bar and elsewhere on Yosemite
-defaults write com.apple.universalaccess reduceTransparency -bool true
+# defaults write com.apple.universalaccess reduceTransparency -bool true
 
 # Menu bar: hide the Time Machine, Volume, and User icons
-for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
-    defaults write "${domain}" dontAutoLoad -array \
-        "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-        "/System/Library/CoreServices/Menu Extras/Volume.menu" \
-        "/System/Library/CoreServices/Menu Extras/User.menu"
-done
-defaults write com.apple.systemuiserver menuExtras -array \
-    "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-    "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-    "/System/Library/CoreServices/Menu Extras/Battery.menu" \
-    "/System/Library/CoreServices/Menu Extras/Clock.menu"
+# for domain in ~/Library/Preferences/ByHost/com.apple.systemuiserver.*; do
+#     defaults write "${domain}" dontAutoLoad -array \
+#         "/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
+#         "/System/Library/CoreServices/Menu Extras/Volume.menu" \
+#         "/System/Library/CoreServices/Menu Extras/User.menu"
+# done
+# defaults write com.apple.systemuiserver menuExtras -array \
+#     "/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
+#     "/System/Library/CoreServices/Menu Extras/AirPort.menu" \
+#     "/System/Library/CoreServices/Menu Extras/Battery.menu" \
+#     "/System/Library/CoreServices/Menu Extras/Clock.menu"
 
 running "Set highlight color to green (wasabi color)"
 #defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
@@ -275,6 +236,13 @@ defaults write NSGlobalDomain AppleHighlightColor -string "0.658822 0.749019 0.5
 # running "Always show scrollbars"
 # defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
 # Possible values: `WhenScrolling`, `Automatic` and `Always`
+
+# Disable the over-the-top focus ring animation
+# defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
+
+# Disable smooth scrolling
+# (Uncomment if you’re on an older Mac that messes up the animation)
+#defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
 
 running "Increase window resize speed for Cocoa applications"
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001;ok
@@ -291,6 +259,7 @@ ok
 
 running "Save to disk (not to iCloud) by default"
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false;ok
+
 
 running "Disable macOS automatically optimize storage, you can enable it at \"iCloud > iCloud Drive > Options\" and check the \"Optimize Mac Storage\" checkbox"
 defaults write com.apple.bird optimize-storage -int 0;ok
@@ -312,26 +281,6 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false;ok
 
 running "Disable smart dashes as they’re annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false;ok
-
-# ###############################################
-# prompt "SSD-specific tweaks"
-# ###############################################
-#
-# running "Disable local Time Machine snapshots"
-# sudo tmutil disablelocal;ok
-
-# running "Disable hibernation (speeds up entering sleep mode)"
-# sudo pmset -a hibernatemode 0;ok
-#
-# running "Remove the sleep image file to save disk space"
-# sudo rm -rf /Private/var/vm/sleepimage;ok
-# running "Create a zero-byte file instead"
-# sudo touch /Private/var/vm/sleepimage;ok
-# running "…and make sure it can’t be rewritten"
-# sudo chflags uchg /Private/var/vm/sleepimage;ok
-
-#running "Disable the sudden motion sensor as it’s not useful for SSDs"
-# sudo pmset -a sms 0;ok
 
 ###############################################
 # prompt "Optional / Experimental"
@@ -368,6 +317,47 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false;ok
 
 # running "Stop iTunes from responding to the keyboard media keys"
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null;ok
+
+###############################################################################
+# Energy saving                                                               #
+###############################################################################
+
+# Enable lid wakeup
+sudo pmset -a lidwake 1
+
+# Restart automatically on power loss
+sudo pmset -a autorestart 1
+
+# Restart automatically if the computer freezes
+sudo systemsetup -setrestartfreeze on
+
+# Sleep the display after 15 minutes
+sudo pmset -a displaysleep 15
+
+# Disable machine sleep while charging
+sudo pmset -c sleep 0
+
+# Set machine sleep to 5 minutes on battery
+sudo pmset -b sleep 5
+
+# Set standby delay to 24 hours (default is 1 hour)
+sudo pmset -a standbydelay 86400
+
+# Never go into computer sleep mode
+sudo systemsetup -setcomputersleep Off > /dev/null
+
+# Hibernation mode
+# 0: Disable hibernation (speeds up entering sleep mode)
+# 3: Copy RAM to disk so the system state can still be restored in case of a
+#    power failure.
+sudo pmset -a hibernatemode 0
+
+# Remove the sleep image file to save disk space
+sudo rm /private/var/vm/sleepimage
+# Create a zero-byte file instead…
+sudo touch /private/var/vm/sleepimage
+# …and make sure it can’t be rewritten
+sudo chflags uchg /private/var/vm/sleepimage
 
 # running "Show icons for hard drives, servers, and removable media on the desktop"
 # defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
@@ -471,6 +461,18 @@ defaults write -g InitialKeyRepeat -int 35;ok
 # defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
 # defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 # defaults write NSGlobalDomain AppleMetricUnits -bool true;ok
+
+running "Disable automatic capitalization as it’s annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false; ok
+
+running "Disable smart dashes as they’re annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false; ok
+
+running "Disable automatic period substitution as it’s annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false;ok
+
+running "Disable smart quotes as they’re annoying when typing code"
+defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false; ok
 
 running "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false;ok
@@ -869,10 +871,31 @@ defaults write com.apple.commerce AutoUpdate -bool true;ok
 # defaults write com.apple.commerce AutoUpdateRestartRequired -bool true;ok
 
 ###############################################################################
-prompt "Configuring Photos"
+# Kill affected applications                                                  #
 ###############################################################################
 
-running "Prevent Photos from opening automatically when devices are plugged in"
-defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true;ok
-
-prompt "Done. Note that some of these changes require a logout/restart to take effect."
+for app in "Activity Monitor" \
+	"Address Book" \
+	"Calendar" \
+	"cfprefsd" \
+	"Contacts" \
+	"Dock" \
+	"Finder" \
+	"Google Chrome Canary" \
+	"Google Chrome" \
+	"Mail" \
+	"Messages" \
+	"Opera" \
+	"Photos" \
+	"Safari" \
+	"SizeUp" \
+	"Spectacle" \
+	"SystemUIServer" \
+	"Terminal" \
+	"Transmission" \
+	"Tweetbot" \
+	"Twitter" \
+	"iCal"; do
+	killall "${app}" &> /dev/null
+done
+echo "Done. Note that some of these changes require a logout/restart to take effect."

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function enable_forklift()
+{
+  if [ -d "/Applications/Setapp/ForkLift.app" ]
+  then
+      defaults write -g NSFileViewer -string com.binarynights.forklift-setapp;
+      defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.folder";LSHandlerRoleAll="com.binarynights.forklift-setapp";}'
+  elif [ -d "/Applications/ForkLift.app" ]
+  then
+      defaults write -g NSFileViewer -string com.binarynights.ForkLift-3;
+      defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.folder";LSHandlerRoleAll="com.binarynights.ForkLift-3";}'
+  else
+      echo "ForkLift not installed, nothing to do."
+  fi
+}
+
+function disable_forklift()
+{
+  defaults delete -g NSFileViewer
+}
+
+if [[ "$1" = "enable" ]]
+then
+  enable_forklift
+else
+  disable_forklift
+fi

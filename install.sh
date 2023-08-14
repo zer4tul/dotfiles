@@ -2,6 +2,31 @@
 
 BASE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
+function prompt() {
+    printf "${COL_BLUE}[^_^]${COL_RESET} - %s\n" "$1"
+}
+
+function ok() {
+    printf "${COL_GREEN}[ok]${COL_RESET} %s\n" "$1"
+}
+
+
+function running() {
+    printf "${COL_YELLOW} => ${COL_RESET}%s: " "$1"
+}
+
+function action() {
+    printf "\n\t${COL_CYAN}[Action]:${COL_RESET} => %s... " "$1"
+}
+
+function warn() {
+    printf "${COL_YELLOW}[Warning]: %s\n${COL_RESET}" "$1"
+}
+
+function error() {
+    printf "${COL_RED}[Error]: %s\n${COL_RESET}" "$1"
+}
+
 # color macros
 if [ -t 1 ]
 then
@@ -92,6 +117,23 @@ function tweak_macos() {
         esac
     done
 }
+
+
+###############################################################################
+# Install homebrew (CLI Packages)                                             #
+###############################################################################
+OS=$(uname)
+if [ "$OS" = "Darwin" ]; then
+    brew_bin=$(which brew) 2>&1 > /dev/null
+    if [[ $? != 0 ]]; then
+        action "Mac OS without Homebrew detected. Installing homebrew"
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        if [[ $? != 0 ]]; then
+            error "unable to install homebrew, script $0 abort!"
+            exit 2
+        fi
+    fi
+fi
 
 test_stow
 test_git
