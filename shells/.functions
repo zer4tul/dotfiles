@@ -1,0 +1,31 @@
+# Util functions
+hex_gbk(){
+    python -c "from binascii import hexlify; print('\t'.join([\"$1\", hexlify(\"$1\".decode('utf-8').encode('gbk'))]))"
+}
+
+hex_utf8(){
+    python -c "from binascii import hexlify; print('\t'.join([\"$1\", hexlify(\"$1\")]))"
+}
+
+# Enhancement for MacOS only {{{2
+if [ "$(uname)" = "Darwin" ]
+then
+    # Enhance completion for iTerm2
+    compctl -f -x 'p[2]' -s "$(/bin/ls -d1 /Applications/*/*.app /Applications/*.app | sed 's|^.*/\([^/]*\)\.app.*|\\1|;s/ /\\\\ /g')" -- open
+    alias run='open -a'
+
+    brew_fresh()
+    {
+        brew update && brew upgrade --greedy
+        brew cleanup
+    }
+
+    # autojump settings
+    [[ -s "$(brew --prefix)/etc/autojump.sh" ]] && source "$(brew --prefix)/etc/autojump.sh"
+
+    # homebrew settings
+    # Set architecture flags
+    export ARCHFLAGS="-arch x86_64"
+
+
+fi

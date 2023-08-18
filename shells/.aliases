@@ -1,0 +1,21 @@
+if [ -f "$(which nvim)" ]; then
+    alias vi="nvim"
+else 
+    alias vi="vim"
+fi
+
+# use ls from GNU Coreutils ( if exists ) instead of BSD ls.
+if [ -f "$(which exa)" ]; then
+    alias ls='exa'
+elif [ -f "$(which gls)" ] && [ "$(uname)" = "Darwin" ]; then
+    alias ls='gls --color=auto'
+fi
+
+if [ -f "$(which bat)" ]; then
+    alias cat='bat'
+fi
+
+
+if [ -f "$(which duf)" ]; then
+    alias df='duf'
+fi

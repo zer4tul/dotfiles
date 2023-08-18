@@ -50,7 +50,7 @@ then
     COL_BG_WHITE="$( printf "\e[47m" )"
 fi
 
-DEFAULT_PKG="stow zsh tmux"
+DEFAULT_PKG="stow shells zsh tmux"
 LINUX_ONLY_PKG="git"
 MACOS_ONLY_PKG="macos"
 
@@ -76,31 +76,31 @@ function test_git() {
 }
 
 function list_packages() {
-    echo $(find $BASE_DIR -maxdepth 1 -mindepth 1 -type d | grep -v '.git' | awk -F / '{print $NF}')
+    find "$BASE_DIR" -maxdepth 1 -mindepth 1 -type d | grep -v '.git' | grep -v "macos" | grep -v "test" | awk -F / '{print $NF}'
 }
 
 function stow_dotfiles() {
     # stow
     clear
     echo "stow dotfile folders"
-    $stow_exec -v $(list_packages)
+    $stow_exec -v "$(list_packages)"
 }
 
-function install_shell_global_config() {
-    echo 'source "$HOME"/.profile.global' >> "$HOME"/.profile
-    echo 'source "$HOME"/.zshrc.global' >> "$HOME"/.zshrc
-}
+# function install_shell_global_config() {
+#     echo 'source "$HOME"/.profile.global' >> "$HOME"/.profile
+#     echo 'source "$HOME"/.zshrc.global' >> "$HOME"/.zshrc
+# }
 
 
 function tweak_macos() {
     QUESTION="Tweak MacOS settings?(Y/n)"
-    echo -e $QUESTION
+    echo -e "$QUESTION"
 
     while true
     do
         # -n return after 1 char
         # -s don't echo user input
-        read -n 1 -s ANSWER
+        read -r -n 1 -s ANSWER
 
         case $ANSWER in
             [yY] )
@@ -113,7 +113,7 @@ function tweak_macos() {
                 exit;;
             * )
                 clear
-                echo -e "Input Error\n"$QUESTION;;
+                echo -e "Input Error\n""$QUESTION";;
         esac
     done
 }
@@ -127,11 +127,7 @@ if [ "$OS" = "Darwin" ]; then
     brew_bin=$(which brew) 2>&1 > /dev/null
     if [[ $? != 0 ]]; then
         action "Mac OS without Homebrew detected. Installing homebrew"
-        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-        if [[ $? != 0 ]]; then
-            error "unable to install homebrew, script $0 abort!"
-            exit 2
-        fi
+        ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" || error "unable to install homebrew, script $0 abort!"; exit 2
     fi
 fi
 
