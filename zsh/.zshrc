@@ -12,6 +12,14 @@ then
     [[ ! -f "$HOME/.zshrc_macos" ]] || source "$HOME/.zshrc_macos"
 fi
 
+# load antigen
+[[ ! -f "/usr/local/share/antigen/antigen.zsh" ]] ||  source "/usr/local/share/antigen/antigen.zsh"
+[[ ! -f "/opt/homebrew/share/antigen/antigen.zsh" ]] || source "/opt/homebrew/share/antigen/antigen.zsh"
+
+# if cannot found antigen, install it into $HOME/.zsh/antigen.zsh
+[[ ! $(which antigen) ]] || mkdir -p "$HOME/.zsh" curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh"
+
+
 # Add Antigen Bundles
 antigen bundles <<EOBUNDLES
 command-not-found
@@ -61,7 +69,7 @@ source "$HOME/.functions"
 source "$HOME/.environment"
 
 if [ -e "$HOME/.zsh/local.zsh" ]; then # If local.zsh exists, source it
-  source ~/.zsh/local.zsh
+  source "$HOME/.zsh/local.zsh"
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
