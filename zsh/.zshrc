@@ -15,23 +15,19 @@ fi
 # load antigen
 [[ ! -f "/usr/local/share/antigen/antigen.zsh" ]] ||  source "/usr/local/share/antigen/antigen.zsh"
 [[ ! -f "/opt/homebrew/share/antigen/antigen.zsh" ]] || source "/opt/homebrew/share/antigen/antigen.zsh"
+[[ ! -f "$HOME/.zsh/antigen.zsh" ]] || source "$HOME/.zsh/antigen.zsh"
 
 # if cannot found antigen, install it into $HOME/.zsh/antigen.zsh
-[[ ! $(which antigen) ]] || mkdir -p "$HOME/.zsh" curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh"
-
+command -v antigen >/dev/null 2>&1 || (mkdir -p "$HOME/.zsh" && curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh" && source "$HOME/.zsh/antigen.zsh")
 
 # Add Antigen Bundles
 antigen bundles <<EOBUNDLES
 command-not-found
 colored-man-pages
 magic-enter
-ssh-agent
 extract
-tmux
 git
 git-extras
-pass
-autojump
 
 Tarrasch/zsh-autoenv
 
@@ -41,6 +37,14 @@ zsh-users/zsh-syntax-highlighting
 
 rupa/z
 EOBUNDLES
+
+if [ "$os" = "Darwin" ] || [ "$os" = "Linux" ]
+then
+    antigen bundle tmux
+    antigen bundles ssh-agent
+    antigen bundles autojump
+    antigen bundle pass
+fi
 
 antigen theme romkatv/powerlevel10k
 # antigen theme denysdovhan/spaceship-prompt
