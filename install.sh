@@ -105,7 +105,7 @@ function tweak_macos() {
         case $ANSWER in
             [yY] )
                 SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
-                bash "$SCRIPTPATH/bin/macos"
+                bash "$SCRIPTPATH/bin/bin/macos"
                 break;;
             [nN] )
                 clear;

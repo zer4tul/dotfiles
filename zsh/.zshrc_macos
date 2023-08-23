@@ -1,0 +1,7 @@
+[[ ! -f "/usr/local/share/antigen/antigen.zsh" ]] ||  source "/usr/local/share/antigen/antigen.zsh"
+[[ ! -f "/opt/homebrew/share/antigen/antigen.zsh" ]] || source "/opt/homebrew/share/antigen/antigen.zsh"
+
+if [[ $(uname -m) == 'arm64' ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+fi
