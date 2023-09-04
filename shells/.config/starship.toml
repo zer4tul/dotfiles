@@ -1,0 +1,28 @@
+[golang]
+symbol = ""
+format = 'via [$symbol($version )($mod_version )]($style)'
+
+[battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂎 '
+
+[[battery.display]]
+threshold = 10
+style = 'bold red'
+
+[os]
+format = "[$symbol]($style)"
+style = "bold"
+disabled = false
+
+[os.symbols]
+Linux = " "
+Macos = " "
+Windows = " "
+
+[python]
+symbol = ' '
+pyenv_version_name = true
+python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
+format = 'via [${symbol}(${version} )(\($virtualenv\) )]($style)'

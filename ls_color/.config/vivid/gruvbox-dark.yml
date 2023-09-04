@@ -132,6 +132,7 @@ markup:
 programming:
   source:
     foreground: green
+    font-style: italic
 
   tooling:
     foreground: alt_green

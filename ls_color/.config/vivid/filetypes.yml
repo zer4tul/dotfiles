@@ -298,6 +298,27 @@ media:
     - .webm
     - .wmv
 
+  3d:
+    - .blend
+    - .c4d
+    - .cal3d
+    - .obj
+    - .fbx
+    - .duf
+    - .max
+    - .ply
+    - .u3d
+    - .usd
+    - .usda
+    - .usdc
+    - .usdz
+    - .stl
+    - .bvh
+    - .glb
+    - .gltf
+    - .x3d
+    - .dae
+
   fonts:
     - .fnt
     - .fon
@@ -350,6 +371,21 @@ archives:
     - .iso
     - .toast
     - .vcd
+    - .cue
+    - .vhd
+    - .vfd
+    - .vud
+    - .vmdk
+    - .nvram
+    - .vmem
+    - .vmsd
+    - .vmsn
+    - .vdi
+    - .hdd
+    - .cow
+    - .qcow
+    - .qcow2
+    - .qed
 
   other:
     - .7z
@@ -368,6 +404,8 @@ archives:
     - .z
     - .zip
     - .zst
+    - .lzo
+    - .lz
 
 executable:
   windows:

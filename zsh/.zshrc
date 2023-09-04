@@ -46,8 +46,8 @@ then
     antigen bundle pass
 fi
 
-antigen theme romkatv/powerlevel10k
-# antigen theme denysdovhan/spaceship-prompt
+#antigen theme romkatv/powerlevel10k
+command -v starship >/dev/null 2>&1 || antigen theme denysdovhan/spaceship-prompt
 
 antigen apply # Use it
 
@@ -76,5 +76,12 @@ if [ -e "$HOME/.zsh/local.zsh" ]; then # If local.zsh exists, source it
   source "$HOME/.zsh/local.zsh"
 fi
 
+# Setup zoxide if it is installed
+# FIXME: seems it will lock zsh startup progress
+#command -v zoxide  > /dev/null 2>&1 || eval "$(zoxide init zsh)"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# use starship prompt
+eval "$(starship init zsh)"
