@@ -1,4 +1,4 @@
 if [[ $(uname -m) == 'arm64' ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
-  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+  export PATH="/Users/kefei/Library/Python/3.11/bin:/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
 fi
