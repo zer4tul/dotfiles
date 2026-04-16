@@ -1,6 +1,6 @@
 [golang]
 symbol = ""
-format = 'via [$symbol($version )($mod_version )]($style)'
+format = ' [go](italic) [$symbol($version )($mod_version )]($style)'
 
 [battery]
 full_symbol = '󰁹 '
@@ -25,4 +25,10 @@ Windows = " "
 symbol = ' '
 pyenv_version_name = true
 python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
-format = 'via [${symbol}(${version} )(\($virtualenv\) )]($style)'
+format = ' [py](italic) [${symbol}(${version} )(\($virtualenv\) )]($style)'
+
+[rust]
+format = " [rs](italic) [$symbol$version ]($style)"
+symbol = "⊃ "
+version_format = "${raw}"
+style = "bold red"

@@ -1,0 +1,159 @@
+# vi: ft=dosini
+[main]
+
+# Enables context sensitive auto-completion. If this is disabled the all
+# possible completions will be listed.
+smart_completion = True
+
+# Multi-line mode allows breaking up the sql statements into multiple lines. If
+# this is set to True, then the end of the statements must have a semi-colon.
+# If this is set to False then sql statements can't be split into multiple
+# lines. End of line (return) is considered as the end of the statement.
+multi_line = False
+
+# Destructive warning mode will alert you before executing a sql statement
+# that may cause harm to the database such as "drop table", "drop database"
+# or "shutdown".
+destructive_warning = True
+
+# log_file location.
+log_file = ~/.mycli.log
+
+# Default log level. Possible values: "CRITICAL", "ERROR", "WARNING", "INFO"
+# and "DEBUG". "NONE" disables logging.
+log_level = INFO
+
+# Log every query and its results to a file. Enable this by uncommenting the
+# line below.
+# audit_log = ~/.mycli-audit.log
+
+# Timing of sql statements and table rendering.
+timing = True
+
+# Beep after long-running queries are completed; 0 to disable.
+beep_after_seconds = 0
+
+# Table format. Possible values: ascii, double, github,
+# psql, plain, simple, grid, fancy_grid, pipe, orgtbl, rst, mediawiki, html,
+# latex, latex_booktabs, textile, moinmoin, jira, vertical, tsv, csv.
+# Recommended: ascii
+table_format = ascii
+
+# Syntax coloring style. Possible values (many support the "-dark" suffix):
+# manni, igor, xcode, vim, autumn, vs, rrt, native, perldoc, borland, tango, emacs,
+# friendly, monokai, paraiso, colorful, murphy, bw, pastie, paraiso, trac, default,
+# fruity.
+# Screenshots at http://mycli.net/syntax
+# Can be further modified in [colors]
+syntax_style = default
+
+# Keybindings: Possible values: emacs, vi.
+# Emacs mode: Ctrl-A is home, Ctrl-E is end. All emacs keybindings are available in the REPL.
+# When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
+key_bindings = emacs
+
+# Enabling this option will show the suggestions in a wider menu. Thus more items are suggested.
+wider_completion_menu = False
+
+# MySQL prompt
+# \D - The full current date
+# \d - Database name
+# \h - Hostname of the server
+# \m - Minutes of the current time
+# \n - Newline
+# \P - AM/PM
+# \p - Port
+# \R - The current time, in 24-hour military time (0-23)
+# \r - The current time, standard 12-hour time (1-12)
+# \s - Seconds of the current time
+# \t - Product type (Percona, MySQL, MariaDB, TiDB)
+# \A - DSN alias name (from the [alias_dsn] section)
+# \u - Username
+# \x1b[...m - insert ANSI escape sequence
+prompt = '\t \u@\h:\d> '
+prompt_continuation = '->'
+
+# Skip intro info on startup and outro info on exit
+less_chatty = False
+
+# Use alias from --login-path instead of host name in prompt
+login_path_as_host = False
+
+# Cause result sets to be displayed vertically if they are too wide for the current window,
+# and using normal tabular format otherwise. (This applies to statements terminated by ; or \G.)
+auto_vertical_output = False
+
+# keyword casing preference. Possible values "lower", "upper", "auto"
+keyword_casing = auto
+
+# disabled pager on startup
+enable_pager = True
+
+# Choose a specific pager
+pager = 'less'
+
+# Custom colors for the completion menu, toolbar, etc.
+[colors]
+completion-menu.completion.current = 'bg:#282828 #ebdbb2'
+completion-menu.completion = 'bg:#98971a #282828'
+completion-menu.meta.completion.current = 'bg:#44aaaa #ebdbb2'
+completion-menu.meta.completion = 'bg:#b8bb26 #282828'
+completion-menu.multi-column-meta = 'bg:#83a598 #ebdbb2'
+scrollbar.arrow = 'bg:#689d6a'
+scrollbar = 'bg:#8ec07c'
+selected = '#282828 bg:#458388'
+search = '#282828 bg:#83a598'
+search.current = '#282828 bg:#83a598'
+bottom-toolbar = 'bg:#3c3836 #928374'
+bottom-toolbar.off = 'bg:#3c3836 #888888'
+bottom-toolbar.on = 'bg:#3c3836 #282828'
+search-toolbar = 'noinherit bold'
+search-toolbar.text = 'nobold'
+system-toolbar = 'noinherit bold'
+arg-toolbar = 'noinherit bold'
+arg-toolbar.text = 'nobold'
+bottom-toolbar.transaction.valid = 'bg:#3c3836 #8ec07c bold'
+bottom-toolbar.transaction.failed = 'bg:#3c3836 #8ec07c bold'
+
+# style classes for colored table output
+output.header = "#8ec07c bold"
+output.odd-row = ""
+output.even-row = ""
+output.null = "#928374"
+
+# SQL syntax highlighting overrides
+sql.comment = 'italic #689d6a'
+# sql.comment.multi-line = ''
+# sql.comment.single-line = ''
+# sql.comment.optimizer-hint = ''
+sql.escape = 'border:#fb4934'
+sql.keyword = 'bold #b8bb26'
+sql.datatype = 'nobold #cc241d'
+# sql.literal = ''
+# sql.literal.date = ''
+# sql.symbol = ''
+# sql.quoted-schema-object = ''
+# sql.quoted-schema-object.escape = ''
+sql.constant = '#d65d0e'
+sql.function = '#458588'
+sql.variable = '#83a598'
+sql.number = '#7c6f64'
+# sql.number.binary = ''
+# sql.number.float = ''
+# sql.number.hex = ''
+# sql.number.integer = ''
+sql.operator = '#7c6f64'
+# sql.punctuation = ''
+sql.string = '#9d0006'
+# sql.string.double-quouted = ''
+sql.string.escape = 'bold #af3a03'
+# sql.string.single-quoted = ''
+# sql.whitespace = ''
+
+# Favorite queries.
+[favorite_queries]
+
+# Use the -d option to reference a DSN.
+# Special characters in passwords and other strings can be escaped with URL encoding.
+[alias_dsn]
+# example_dsn = mysql://[user[:password]@][host][:port][/dbname]

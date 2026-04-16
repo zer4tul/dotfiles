@@ -1,0 +1,35 @@
+# This file contains fish universal variable definitions.
+# VERSION: 3.0
+SETUVAR __fish_initialized:3800
+SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
+SETUVAR _fisher_plugins:jorgebucaran/fisher
+SETUVAR _fisher_upgraded_to_4_4:\x1d
+SETUVAR fish_color_autosuggestion:brblack
+SETUVAR fish_color_cancel:\x2dr
+SETUVAR fish_color_command:normal
+SETUVAR fish_color_comment:red
+SETUVAR fish_color_cwd:green
+SETUVAR fish_color_cwd_root:red
+SETUVAR fish_color_end:green
+SETUVAR fish_color_error:brred
+SETUVAR fish_color_escape:brcyan
+SETUVAR fish_color_history_current:\x2d\x2dbold
+SETUVAR fish_color_host:normal
+SETUVAR fish_color_host_remote:yellow
+SETUVAR fish_color_normal:normal
+SETUVAR fish_color_operator:brcyan
+SETUVAR fish_color_param:cyan
+SETUVAR fish_color_quote:yellow
+SETUVAR fish_color_redirection:cyan\x1e\x2d\x2dbold
+SETUVAR fish_color_search_match:white\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_selection:white\x1e\x2d\x2dbold\x1e\x2d\x2dbackground\x3dbrblack
+SETUVAR fish_color_status:red
+SETUVAR fish_color_user:brgreen
+SETUVAR fish_color_valid_path:\x2d\x2dunderline
+SETUVAR fish_key_bindings:fish_default_key_bindings
+SETUVAR fish_pager_color_completion:normal
+SETUVAR fish_pager_color_description:yellow\x1e\x2di
+SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
+SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
+SETUVAR fish_pager_color_selected_background:\x2dr
+SETUVAR fish_user_paths:/Users/kefei/\x2elocal/bin\x1e/opt/homebrew/opt/curl/bin\x1e/Users/kefei/Library/Python/3\x2e11/bin\x1e/opt/homebrew/bin\x1e/opt/homebrew/sbin\x1e/usr/local/bin\x1e/System/Cryptexes/App/usr/bin\x1e/usr/bin\x1e/bin\x1e/usr/sbin\x1e/sbin\x1e/Applications/Wireshark\x2eapp/Contents/MacOS\x1e/Applications/iTerm\x2eapp/Contents/Resources/utilities\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/command\x2dnot\x2dfound\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/colored\x2dman\x2dpages\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/magic\x2denter\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/extract\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/git\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/git\x2dextras\x1e/Users/kefei/\x2eantigen/bundles/Tarrasch/zsh\x2dautoenv\x1e/Users/kefei/\x2eantigen/bundles/zsh\x2dusers/zsh\x2dcompletions\x1e/Users/kefei/\x2eantigen/bundles/zsh\x2dusers/zsh\x2dautosuggestions\x1e/Users/kefei/\x2eantigen/bundles/zsh\x2dusers/zsh\x2dsyntax\x2dhighlighting\x1e/Users/kefei/\x2eantigen/bundles/rupa/z\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/tmux\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/ssh\x2dagent\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/autojump\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/pass\x1e/Users/kefei/\x2eantigen/bundles/robbyrussell/oh\x2dmy\x2dzsh/plugins/direnv\x1e/Users/kefei/bin\x1e/Users/kefei/bin/logins
