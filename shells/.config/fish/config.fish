@@ -57,4 +57,6 @@ set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
 
 # OpenClaw Completion
-source "/Users/kefei/.openclaw/completions/openclaw.fish"
+if test -f "$HOME/.openclaw/completions/openclaw.fish"
+    source "$HOME/.openclaw/completions/openclaw.fish"
+end

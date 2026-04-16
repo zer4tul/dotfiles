@@ -109,4 +109,10 @@ Temporary Items
 # mpv watch_later directory
 mpv/.config/mpv/watch_later
 
+# Fish shell runtime-specific files
+shells/.config/fish/fish_variables
+shells/.config/fish/completions/*.fish
+shells/.config/fish/functions/*.fish
+shells/.config/fish/conf.d/*.fish
+
 /.project
