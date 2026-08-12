@@ -92,3 +92,4 @@ fi
 
 # opencode
 export PATH=/Users/kefei/.opencode/bin:$PATH
+export SANDBOX_USERNAME=kefei

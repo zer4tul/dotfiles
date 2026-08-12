@@ -36,6 +36,7 @@ if status is-interactive
       set -gx http_proxy "http://127.0.0.1:7890"
       set -gx https_proxy "http://127.0.0.1:7890"
       set -gx all_proxy "socks5://127.0.0.1:7890"
+      set -gx no_proxy "localhost,127.0.0.1,.baidu-int.com,.baidu.com,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
       echo "Proxy: ON 🚀"
     end
 
@@ -60,3 +61,12 @@ set --export PATH $BUN_INSTALL/bin $PATH
 if test -f "$HOME/.openclaw/completions/openclaw.fish"
     source "$HOME/.openclaw/completions/openclaw.fish"
 end
+
+# opencode
+fish_add_path /Users/kefei/.opencode/bin
+
+# Added by Comate
+fish_add_path /Users/kefei/.comate/bin
+
+# Added by DuCC (symlink)
+fish_add_path /Users/kefei/.comate/baidu-cc/bin
