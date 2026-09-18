@@ -2,3 +2,6 @@
 .zsh/.zcompdump*
 .zsh/local.zsh
 .zsh/.zsh_history
+
+# tmux 插件 (TPM 每机器自装, themepack 仍跟踪)
+tmux/.tmux/plugins/tpm/

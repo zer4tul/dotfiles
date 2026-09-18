@@ -46,7 +46,7 @@ Dependencies (brew): `antidote zoxide eza bat duf btop starship fzf` (+ `zsh`); 
 ### Verify after any zsh change
 
 ```
-zsh -i -c 'echo $+functions[_zsh_highlight] $(whence -w cd)'   # expect "1 cd: function"
+zsh -i -c 'echo $+functions[_zsh_highlight] $(whence -w cd)'   # expect "1 cd: function" (brew zoxide ≥1.0) or "1 cd: alias" (apt zoxide 0.9: --cmd cd 用 alias 实现, 行为等价, 可接受)
 /usr/bin/time zsh -i -c exit                                    # expect < 150ms
 ```
 
