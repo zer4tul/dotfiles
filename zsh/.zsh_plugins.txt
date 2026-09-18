@@ -1,0 +1,7 @@
+# antidote 插件清单 (一行一个, # 开头为注释)
+# 安装/删除插件: 编辑本文件后重启 shell (首次自动 clone)
+# 更新插件: antidote update
+zsh-users/zsh-completions kind:fpath path:src
+zsh-users/zsh-autosuggestions
+# syntax-highlighting 必须最后一个
+zsh-users/zsh-syntax-highlighting
