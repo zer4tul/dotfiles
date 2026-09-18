@@ -1,110 +1,77 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
+# ~/.zshrc — 快速启动 + fish 易用性。备份: ~/.zshrc.bak.20260918
+# 架构: 无插件管理器, 插件静态 clone 在 ~/.zsh/plugins/
 
-os=$(uname)
-if [ "$os" = "Darwin" ]
-then
-    # Add MacOS spicified plugin into plugin list
-    [[ ! -f "$HOME/.zshrc_macos" ]] || source "$HOME/.zshrc_macos"
+if [[ -o interactive ]]; then
+  # macOS (brew shellenv)
+  [[ ! -f "$HOME/.zshrc_macos" ]] || source "$HOME/.zshrc_macos"
+
+  # --- 补全框架: 先补全插件进 fpath, 再 compinit ---
+  fpath=("$HOME/.zsh/plugins/zsh-users/zsh-completions/src" $fpath)
+  source "$HOME/.zsh/plugins/zsh-users/zsh-completions/zsh-completions.plugin.zsh" 2>/dev/null
+  source "$HOME/.zsh/plugins/zsh-users/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+  autoload -Uz compinit
+  # .zcompdump 24h 内复用缓存(-C 跳过安全检查), 过期才全量重建
+  if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+  else
+    compinit -C
+  fi
+
+  # --- history: fish 风格实时共享 ---
+  HISTFILE="$HOME/.zsh_history"
+  HISTSIZE=50000
+  SAVEHIST=50000
+  setopt SHARE_HISTORY HIST_IGNORE_ALL_DUPS HIST_REDUCE_BLANKS HIST_IGNORE_SPACE
+  setopt AUTO_CD INTERACTIVE_COMMENTS
+
+  # --- 键绑定: emacs 风格 + 修正 home/end/delete/词跳转 ---
+  bindkey -e
+  bindkey '\e[1;5C' forward-word    # ctrl+→
+  bindkey '\e[1;5D' backward-word
+  bindkey '\e[3~'   delete-char
+  bindkey '\e[1;3C' forward-word    # option+→
+  bindkey '\e[1;3D' backward-word
+
+  # --- aliases / functions / environment (dotfiles 共享) ---
+  source "$HOME/.aliases"
+  source "$HOME/.functions"
+  source "$HOME/.environment"
+
+  # --- 对齐 fish abbr ---
+  alias ls='eza --icons --group-directories-first'
+  alias top='btop'
+  alias sqlite='litecli'
+  alias bup='brew update && brew upgrade --greedy && brew cleanup'
+
+  # 全局缩写 (输入后按空格展开, 等价 fish abbr --position anywhere)
+  alias -g @cf="$HOME/.config/fish/config.fish"
+  alias -g @zrc="$HOME/.zshrc"
+  alias -g @reddit="$HOME/Downloads/gallery_dl/reddit"
+  alias -g @twitter="$HOME/Downloads/gallery_dl/twitter"
+  alias -g @ins="$HOME/Downloads/gallery_dl/instagram"
+  alias -g @jeeves="$HOME/go/src/github.com/zer4tul/jeeves"
+
+  # --- zoxide 接管 cd (与 fish 一致: cd foo 模糊跳转) ---
+  eval "$(zoxide init zsh --cmd cd)"
+
+  # --- 提示符: starship (配置沿用 ~/.config/starship.toml) ---
+  eval "$(starship init zsh)"
+
+  # --- 语法高亮必须最后加载 ---
+  source "$HOME/.zsh/plugins/zsh-users/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+  # --- 本机私有配置 ---
+  [[ -f "$HOME/.zsh/local.zsh" ]] && source "$HOME/.zsh/local.zsh"
+
+  # --- 从 fish 同步的环境变量 ---
+  export BUN_INSTALL="$HOME/.bun"
+  export PATH="$BUN_INSTALL/bin:$PATH"
+  export PATH="$HOME/.comate/bin:$PATH"
+  export PATH="$HOME/.comate/baidu-cc/bin:$PATH"
+  export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# load antigen
-[[ ! -f "/usr/local/share/antigen/antigen.zsh" ]] ||  source "/usr/local/share/antigen/antigen.zsh"
-[[ ! -f "/opt/homebrew/share/antigen/antigen.zsh" ]] || source "/opt/homebrew/share/antigen/antigen.zsh"
-[[ ! -f "$HOME/.zsh/antigen.zsh" ]] || source "$HOME/.zsh/antigen.zsh"
-
-# if cannot found antigen, install it into $HOME/.zsh/antigen.zsh
-command -v antigen >/dev/null 2>&1 || (mkdir -p "$HOME/.zsh" && curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh" && source "$HOME/.zsh/antigen.zsh")
-
-# Add Antigen Bundles
-antigen bundles <<EOBUNDLES
-command-not-found
-colored-man-pages
-magic-enter
-extract
-git
-git-extras
-
-Tarrasch/zsh-autoenv
-
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-syntax-highlighting
-
-rupa/z
-EOBUNDLES
-
-if [ "$os" = "Darwin" ] || [ "$os" = "Linux" ]
-then
-    antigen bundle tmux
-    antigen bundles ssh-agent
-    antigen bundles autojump
-    antigen bundle pass
-fi
-
-#antigen theme romkatv/powerlevel10k
-command -v starship >/dev/null 2>&1 || antigen theme denysdovhan/spaceship-prompt
-
-antigen apply # Use it
-
-# Colors {{{2
-if [[ ("$TERM" = *256color || "$TERM" = screen*) && -f $HOME/.dir_colors ]]; then
-    #use prefefined colors
-    eval $(dircolors -b $HOME/.dir_colors)
-    use_256color=1
-    export TERMCAP=${TERMCAP/Co\#8/Co\#256}
-    autoload spectrum.zsh
-else
-    [[ -f $HOME/.lscolor ]] && eval $(dircolors -b $HOME/.lscolor)
-fi
-#}}}
-
-# Aliases
-source "$HOME/.aliases"
-
-# Useful functions
-source "$HOME/.functions"
-
-# Environment variables
-source "$HOME/.environment"
-
-if [ -e "$HOME/.zsh.local" ]; then # If local.zsh exists, source it
-  source "$HOME/.zsh.local"
-fi
-
-# Setup zoxide if it is installed
-# FIXME: seems it will lock zsh startup progress
-#command -v zoxide  > /dev/null 2>&1 || eval "$(zoxide init zsh)"
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# use starship prompt
-eval "$(starship init zsh)"
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/usr/local/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
-        . "/usr/local/Caskroom/miniconda/base/etc/profile.d/conda.sh"
-    else
-        export PATH="/usr/local/Caskroom/miniconda/base/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
-# OpenClaw Completion
-source <(openclaw completion --shell zsh)
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+export SANDBOX_USERNAME=kefei
