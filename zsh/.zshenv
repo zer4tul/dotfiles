@@ -1,5 +1,9 @@
-# .zshenv — 所有 zsh 启动时最先执行(交互/非交互), 用于关键 PATH 初始化
-# brew shellenv 必须在这里: 非交互 zsh 不跑 .zshrc, 但 brew 子命令依赖此 PATH
+# .zshenv — 所有 zsh 启动时最先执行(交互/非交互)
+# ZDOTDIR 重定向: 让 zsh 从 ~/.zsh/ 读 .zshrc/.zprofile, 无需 ~/.zshrc
+export ZDOTDIR="$HOME/.zsh"
+
+# PATH 去重: .zshenv 每个 zsh 都跑(含嵌套 shell), 不去重 PATH 会无限堆积
+typeset -U path PATH
 
 # Homebrew (必须最早: 后续 PATH 依赖 brew 的 bin)
 if [[ -x /opt/homebrew/bin/brew ]]; then

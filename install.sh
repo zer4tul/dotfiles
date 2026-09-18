@@ -83,6 +83,9 @@ function stow_dotfiles() {
     # stow
     clear
     echo "stow dotfile folders"
+    # ~/.zsh 必须先以真实目录存在: 否则 stow 会把整个 dotfiles/zsh/.zsh 目录
+    # 软链过去, local.zsh/.zcompdump 等机器私有与生成文件就会掉进 git 仓库
+    mkdir -p "$HOME/.zsh"
     $stow_exec -v "$(list_packages)"
 }
 

@@ -32,6 +32,8 @@ Design goals: **fast startup (~90ms)**, keep fish usability, dotfiles-managed, i
                                                 (kept as real file so installers
                                                  (conda/bun/etc.) can append to it
                                                  without touching main config)
+                                                ⚠ do NOT stow-symlink this file —
+                                                 see "~/.zshrc must be a real file" below
 ~/.zshrc-global    symlink → zsh/.zshrc-global  MAIN config: antidote load, compinit
                                                 (24h cache), history (SHARE_HISTORY),
                                                 keybindings, aliases, global aliases,
@@ -39,6 +41,21 @@ Design goals: **fast startup (~90ms)**, keep fish usability, dotfiles-managed, i
 ~/.zshrc_macos     symlink → zsh/.zshrc_macos   mac-only extension slot (currently empty)
 ~/.zsh/local.zsh   REAL FILE, NOT in dotfiles   machine-private (keys, local PATH)
 ```
+
+### ~/.zshrc must be a real file — how to set it up
+
+Why: installers (conda, bun, rust, opencode…) append to `~/.zshrc`. If it were a symlink into the repo, every such append would dirty the tracked template with machine-specific junk. Keeping it real + 2 lines makes it disposable: delete and regenerate anytime.
+
+Concrete method (already automated in `install.sh`):
+
+1. **Stow with ignore** — stow must NOT link `.zshrc`:
+   `stow -v zsh --ignore='^\.zshrc$'` (install.sh passes this flag; do not drop it)
+2. **Copy the template** instead of linking:
+   `cp ~/dotfiles/zsh/.zshrc ~/.zshrc`
+3. **Verify**: `test ! -L ~/.zshrc && echo real-file-ok`
+4. **Reset** when polluted: `rm ~/.zshrc && cp ~/dotfiles/zsh/.zshrc ~/.zshrc` — the template is just `source ~/.zshrc-global`.
+
+Gotcha: running plain `stow zsh` (no `--ignore`) on a machine where `~/.zshrc` already exists as a real file will fail with a conflict — that's the guard working; use the flag.
 
 ### Plugin management: antidote
 
