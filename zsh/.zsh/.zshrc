@@ -14,7 +14,7 @@ antidote load
 
 # --- 补全: fpath 已含 zsh-completions(kind:fpath); .zcompdump 24h 内复用 ---
 autoload -Uz compinit
-if [[ -n $HOME/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ${ZDOTDIR:-$HOME}/.zcompdump(#qN.mh+24) ]]; then
   compinit
 else
   compinit -C
@@ -74,3 +74,6 @@ export PATH="$HOME/.hermes/bin:$PATH"
 export PATH="$HOME/.hermes/node/bin:$PATH"
 export PATH="$HOME/.hermes/node:$PATH"
 export PATH="$HOME/.hermes/hermes-agent/venv/bin:$PATH"
+
+# --- 安装器垃圾抽屉: conda/bun/nvm 等会往 ~/.zshrc 追加 (zsh 本身不读它), 可随时删除 ---
+[[ -r "$HOME/.zshrc" ]] && source "$HOME/.zshrc"
