@@ -20,3 +20,6 @@ fi
 # Python 3 (Homebrew formula)
 export PATH="/opt/homebrew/opt/curl/bin:${PATH}"
 [[ -d "$HOME/Library/Python/3.11/bin" ]] && export PATH="$HOME/Library/Python/3.11/bin:${PATH}"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
