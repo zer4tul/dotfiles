@@ -1,3 +1,9 @@
+# macOS
+.DS_Store
+
+# mpv 播放进度 (运行时生成)
+mpv/.config/mpv/watch_later/
+
 # zsh 生成物/机器私有
 .zsh/.zcompdump*
 .zsh/local.zsh
